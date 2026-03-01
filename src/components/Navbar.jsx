@@ -44,7 +44,7 @@ const navLinks = [
     },
     {
         name: 'Contact',
-        href: '#contact',
+        href: '/#contact',
     }
 ];
 
@@ -175,7 +175,7 @@ export default function Navbar() {
                 {/* Right Actions */}
                 <div className="flex items-center gap-4 z-[110]">
                     <Link
-                        href="#contact"
+                        href="/#contact"
                         className="magnetic hidden lg:block group relative px-8 py-2.5 bg-black text-white text-xs font-black uppercase tracking-widest rounded-full overflow-hidden transition-all transform hover:scale-105 active:scale-95 shadow-[0_10px_30px_rgba(0,0,0,0.1)]"
                     >
                         <span className="relative z-10">Enquire</span>
@@ -318,7 +318,7 @@ export default function Navbar() {
                                     </a>
                                 </div>
                                 <Link
-                                    href="#contact"
+                                    href="/#contact"
                                     onClick={() => setIsMobileMenuOpen(false)}
                                     className="block w-full bg-black text-white text-center py-5 rounded-xl font-black uppercase tracking-[0.2em] text-[11px] hover:bg-electric-blue transition-colors shadow-lg"
                                 >

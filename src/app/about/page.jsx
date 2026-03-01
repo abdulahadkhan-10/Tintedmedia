@@ -55,17 +55,19 @@ export default function AboutPage() {
 
             {/* ─── 1. Full-bleed banner ───────────────────── */}
             <section className="relative w-full h-[70vh] overflow-hidden">
-                <img
+                <Image
                     src="/about us/banner.jpeg"
                     alt="Our Story"
-                    className="absolute inset-0 w-full h-full object-bottom"
+                    fill
+                    className="object-cover object-top"
+                    priority
                 />
                 <div className="absolute inset-0 bg-black/10 " />
                 <motion.h1
                     initial={{ opacity: 0, y: 24 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.9 }}
-                    className="absolute bottom-10 left-8 md:left-16 text-white text-5xl md:text-7xl drop-shadow-lg font-bold uppercase tracking-tighter leading-none"
+                    className="absolute bottom-10 left-8 md:left-16 text-white text-5xl md:text-6xl drop-shadow-lg font-bold uppercase tracking-tighter leading-none"
                 >
                     Our Story
                 </motion.h1>

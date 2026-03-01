@@ -7,6 +7,7 @@ import { servicesData } from "@/data/servicesData";
 import { motion } from "framer-motion";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function ServicePage({ params }) {
     const { slug } = use(params);
@@ -58,10 +59,11 @@ export default function ServicePage({ params }) {
                             transition={{ duration: 1, ease: "easeOut" }}
                             className="lg:col-span-5 relative aspect-[4/5] rounded-[3rem] overflow-hidden shadow-2xl"
                         >
-                            <img
+                            <Image
                                 src={data.image}
                                 alt={data.title}
-                                className="w-full h-full object-cover"
+                                fill
+                                className="object-cover"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
                         </motion.div>

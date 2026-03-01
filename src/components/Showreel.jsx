@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Play } from "lucide-react";
+import Image from "next/image";
 
 export default function Showreel() {
     const [isHovered, setIsHovered] = useState(false);
@@ -14,10 +15,11 @@ export default function Showreel() {
                 onMouseLeave={() => setIsHovered(false)}
             >
                 {/* Placeholder Video / Image */}
-                <img
+                <Image
                     src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=1920&q=80"
                     alt="Showreel Thumbnail"
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 opacity-80"
+                    fill
+                    className="object-cover transition-transform duration-1000 group-hover:scale-105 opacity-80"
                 />
 
                 {/* Overlay Gradient - Lighter for white theme */}

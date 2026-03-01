@@ -3,6 +3,7 @@ import { useRef } from "react";
 import Link from "next/link";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import Image from "next/image";
 
 const sections = [
     {
@@ -128,10 +129,11 @@ export default function AboutSection() {
                                         }}
                                     >
                                         <div className="relative w-full aspect-square max-w-[850px]">
-                                            <img
+                                            <Image
                                                 src={section.image}
                                                 alt={section.title}
-                                                className="w-full h-full object-contain drop-shadow-[0_40px_80px_rgba(0,0,0,0.25)] scale-110"
+                                                fill
+                                                className="object-contain drop-shadow-[0_40px_80px_rgba(0,0,0,0.25)] scale-110"
                                             />
                                         </div>
                                     </motion.div>
@@ -201,13 +203,13 @@ export default function AboutSection() {
                     })}
 
                     {/* ── CTA Block ─────────────────── */}
-                    <div className="h-[80vh] flex flex-col justify-start pt-32 lg:pt-40">
+                    <div className="min-h-screen flex flex-col justify-center pt-20 pb-32">
                         <motion.div
                             initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, ease: "easeOut" }}
                             viewport={{ amount: 0.5 }}
-                            className="max-w-xl space-y-8 text-white pt-24 pb-0"
+                            className="max-w-xl space-y-8 text-white"
                         >
                             <span className="font-mono text-xs uppercase tracking-[0.4em] text-cyan-300">
                                 Discover More

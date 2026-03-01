@@ -10,11 +10,11 @@ export default function BTSPage() {
             <Navbar />
 
             {/* Header */}
-            <section className="pt-40 pb-20 px-6 max-w-7xl mx-auto">
-                <div className="flex flex-col md:flex-row justify-between items-end gap-10">
-                    <div className="space-y-4">
-                        <span className="px-4 py-1 border border-electric-blue text-electric-blue font-mono text-[10px] uppercase tracking-[0.4em] rounded-full">Exclusive // Access</span>
-                        <h1 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-[0.85]">
+            <section className="pt-32 pb-0 px-6 max-w-7xl mx-auto text-left flex flex-col items-start">
+                <div className="flex flex-col md:flex-row justify-between items-start gap-10 w-full text-left">
+                    <div className="space-y-4 flex flex-col items-start">
+                        <span className="w-fit px-4 py-1 border border-electric-blue text-electric-blue font-mono text-[10px] uppercase tracking-[0.4em] rounded-full">Exclusive // Access</span>
+                        <h1 className="text-4xl md:text-7xl font-black mt-5 uppercase tracking-tighter leading-[0.85] text-left">
                             Behind <br />
                             <span className="text-electric-blue italic font-light">The Scenes.</span>
                         </h1>
@@ -23,8 +23,8 @@ export default function BTSPage() {
             </section>
 
             {/* Main Story Section */}
-            <section className="px-6 pb-20 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-                <div className="space-y-8">
+            <section className="px-6 pb-16 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center text-left">
+                <div className="space-y-8 flex flex-col items-start">
                     <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter italic leading-none">
                         Where the real <br /> magic happens.
                     </h2>
@@ -46,7 +46,7 @@ export default function BTSPage() {
                         src="/bts.png"
                         alt="BTS Production"
                         fill
-                        className="object-fit"
+                        className="object-cover"
                     />
                 </div>
             </section>

@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const clients = [
     { name: "Dot & Key", src: "/sponsers/Dot-_-Key-Logo.webp" },
@@ -36,10 +37,11 @@ export default function ClientGrid() {
                             className="h-40 border-r border-b border-black/5 flex items-center justify-center group relative overflow-hidden p-8"
                         >
                             <div className="absolute inset-0 bg-black/[0.02] translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
-                            <img
+                            <Image
                                 src={client.src}
                                 alt={client.name}
-                                className="max-w-full max-h-full object-contain grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 z-10 p-4"
+                                fill
+                                className="object-contain grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 z-10 p-8"
                             />
                         </motion.div>
                     ))}

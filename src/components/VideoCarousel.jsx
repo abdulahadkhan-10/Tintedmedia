@@ -70,10 +70,11 @@ export default function VideoCarousel() {
                         >
                             {works.map((work) => (
                                 <div key={work.id} className="min-w-full h-full relative">
-                                    <img
+                                    <Image
                                         src={work.image}
                                         alt="Portfolio Work"
-                                        className="w-full h-full object-cover"
+                                        fill
+                                        className="object-cover"
                                     />
 
                                     {/* Social Metrics Mockup */}

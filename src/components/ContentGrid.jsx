@@ -19,7 +19,7 @@ export default function ContentGrid() {
                         src="/bts.png"
                         alt="Behind The Scenes"
                         fill
-                        className="object-fit transition-transform duration-700 group-hover:scale-110"
+                        className="object-cover transition-transform duration-700 group-hover:scale-110"
                     />
 
                     {/* Dark Overlay for Readability */}
@@ -56,7 +56,7 @@ export default function ContentGrid() {
                         src="/ugc.png"
                         alt="User Generated Content"
                         fill
-                        className="object-fit transition-transform duration-700 group-hover:scale-110"
+                        className="object-cover transition-transform duration-700 group-hover:scale-110"
                     />
 
                     {/* Dark Overlay for Readability */}

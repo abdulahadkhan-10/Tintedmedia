@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 const services = [
     {
@@ -91,10 +92,11 @@ export default function ModernServices() {
                                             exit={{ opacity: 0, scale: 0.8, x: 50, rotate: 5 }}
                                             className="fixed top-1/2 right-[10%] -translate-y-1/2 w-[240px] md:w-[350px] aspect-[4/5] rounded-3xl overflow-hidden pointer-events-none z-[5] hidden lg:block shadow-[0_20px_80px_rgba(0,0,0,0.3)] border border-white/10"
                                         >
-                                            <img
+                                            <Image
                                                 src={service.image}
                                                 alt={service.title}
-                                                className="w-full h-full object-cover brightness-[0.7] contrast-[1.1]"
+                                                fill
+                                                className="object-cover brightness-[0.7] contrast-[1.1]"
                                             />
                                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                                         </motion.div>
