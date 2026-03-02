@@ -161,13 +161,13 @@ export default function AboutSection() {
                         const opacity = useTransform(
                             smoothProgress,
                             index === 0
-                                ? [0, 0, end - 0.01, end]
-                                : [start, start + 0.01, end - 0.01, end],
+                                ? [0, 0.02, end - 0.05, end]
+                                : [start, start + 0.05, end - 0.05, end],
                             [0, 1, 1, 0]
                         );
 
                         return (
-                            <div key={section.id} className={`${index === 0 ? "pt-10" : "pt-40"} h-[150vh] flex flex-col justify-start`}>
+                            <div key={section.id} className={`${index === 0 ? "pt-10" : "pt-24"} h-[100vh] flex flex-col justify-start`}>
                                 <motion.div
                                     style={{ opacity }}
                                     className={`max-w-xl space-y-8 ${section.textColor}`}
