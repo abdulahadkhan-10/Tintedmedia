@@ -63,29 +63,30 @@ export default function AboutPage() {
             <Navbar />
 
             {/* ─── 1. Full-bleed banner ───────────────────── */}
-            <section className="relative w-full h-[70vh] overflow-hidden">
+            <section className="relative w-full overflow-hidden mt-20 md:mt-24">
                 <Image
-                    src="/about us/banner.jpeg"
+                    src="/new/Newbanner.png"
                     alt="Our Story"
-                    fill
-                    className="object-cover object-top"
+                    width={1920}
+                    height={720}
+                    className="w-full h-auto"
                     priority
                 />
                 <div className="absolute inset-0 bg-black/10 " />
-                <motion.h1
+                {/* <motion.h1
                     initial={{ opacity: 0, y: 24 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.9 }}
                     className="absolute bottom-10 left-8 md:left-16 text-white text-5xl md:text-6xl drop-shadow-lg font-bold uppercase tracking-tighter leading-none"
                 >
                     Our Story
-                </motion.h1>
+                </motion.h1> */}
             </section>
 
             {/* ─── 2. About Us Content ──────────────────────── */}
             <section className="relative z-10 bg-white px-8 md:px-16 py-20 md:py-28 border-b border-black/5">
                 <div className="max-w-4xl">
-                    <h2 className="text-[10px] uppercase tracking-[0.4em] font-bold text-electric-blue font-mono mb-8 block">
+                    <h2 className="text-[15px] uppercase tracking-[0.4em] font-bold text-electric-blue font-mono mb-8 block">
                         {aboutUsContent.title}
                     </h2>
                     <div className="space-y-6">

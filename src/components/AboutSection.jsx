@@ -7,16 +7,23 @@ import Image from "next/image";
 
 const sections = [
     {
+        id: "intro-spacer",
+        title: "Spacer",
+        image: "/new/newblank.png",
+        bgColor: "#ffffff",
+        isSpacer: true
+    },
+    {
         id: "about",
         title: "About",
         phonetic: "/əˈbaʊt/",
         subtitle: "The Identity",
         content: "Tinted Media is where strategy meets story — and where brands come to stand out. We're a modern creative and media agency crafting culture-driven campaigns, unforgettable narratives, and content designed to make people stop, look, and engage.",
         quote: "Because looking good isn't enough anymore. You have to mean something.",
-        image: "/cups/blankcup.png",
-        bgColor: "#ffffff",
-        textColor: "text-black",
-        labelColor: "text-electric-blue"
+        image: "/new/2.png",
+        bgColor: "#0a1d37",
+        textColor: "text-white",
+        labelColor: "text-blue-300"
     },
     {
         id: "film",
@@ -24,10 +31,10 @@ const sections = [
         phonetic: "/fɪlm & ˈfoʊ.toʊ/",
         subtitle: "01 // Production",
         content: "Cinematic videos and powerful photography that don't just play—they captivate and convert. We blend sharp strategy with bold storytelling to build identities people remember.",
-        image: "/cups/filmphoto.png",
-        bgColor: "#000000",
+        image: "/new/newfilmcup.png",
+        bgColor: "#050505",
         textColor: "text-white",
-        labelColor: "text-cyan-400"
+        labelColor: "text-gray-400"
     },
     {
         id: "social",
@@ -35,10 +42,10 @@ const sections = [
         phonetic: "/ˈsoʊ.ʃəlz/",
         subtitle: "02 // Engagement",
         content: "We don't just post—we build presence through storytelling, engagement, and consistent growth. We turn digital noise into real influence.",
-        image: "/cups/socialcup.png",
-        bgColor: "#6366f1",
-        textColor: "text-white",
-        labelColor: "text-white/80"
+        image: "/new/newsm.png",
+        bgColor: "#feeae6",
+        textColor: "text-black",
+        labelColor: "text-rose-500"
     },
     {
         id: "design",
@@ -46,10 +53,10 @@ const sections = [
         phonetic: "/dɪˈzaɪn/",
         subtitle: "03 // Branding",
         content: "Visuals that command attention. Bold, strategic, and unforgettable brand identities. Thoughtful. Bold. A little rebellious.",
-        image: "/cups/graphicd.png",
-        bgColor: "#ef4444",
+        image: "/new/newgd.png",
+        bgColor: "#1a1a1b",
         textColor: "text-white",
-        labelColor: "text-white/80"
+        labelColor: "text-blue-400"
     },
     {
         id: "performance",
@@ -57,10 +64,10 @@ const sections = [
         phonetic: "/pərˈfɔːr.məns/",
         subtitle: "04 // Analytics",
         content: "Data-driven marketing that scales ROI and turns clicks into measurable revenue. We don't chase the digital pulse. We create it.",
-        image: "/cups/performancem.png",
-        bgColor: "#10b981",
+        image: "/new/newpm.png",
+        bgColor: "#0c0c0c",
         textColor: "text-white",
-        labelColor: "text-white/80"
+        labelColor: "text-emerald-500"
     },
     {
         id: "web",
@@ -68,10 +75,10 @@ const sections = [
         phonetic: "/dɪˈvɛl.əp.mənt/",
         subtitle: "05 // Digital",
         content: "High-performing, SEO-friendly websites that design for performance and work hard for your business. Blending art with analytics.",
-        image: "/cups/webdev.png",
-        bgColor: "#0f172a",
-        textColor: "text-white",
-        labelColor: "text-cyan-300"
+        image: "/new/newweb.png",
+        bgColor: "#dceefb",
+        textColor: "text-black",
+        labelColor: "text-blue-600"
     }
 ];
 
@@ -123,7 +130,7 @@ export default function AboutSection() {
                             >
                                 {!section.isBlank && (
                                     <motion.div
-                                        className="absolute top-0 right-0 w-full lg:w-[45%] h-full flex items-start lg:items-center justify-center pt-16 lg:pt-4"
+                                        className="absolute top-0 right-0 w-full lg:w-[70%] h-full flex items-start lg:items-center justify-center pt-16 lg:pt-4"
                                         style={{
                                             y: index === 0 ? 0 : yInverse
                                         }}
@@ -165,6 +172,8 @@ export default function AboutSection() {
                                 : [start, start + 0.05, end - 0.05, end],
                             [0, 1, 1, 0]
                         );
+
+                        if (section.isSpacer) return <div key={section.id} className="h-[100vh]" />;
 
                         return (
                             <div key={section.id} className={`${index === 0 ? "pt-10" : "pt-24"} h-[100vh] flex flex-col justify-start`}>
@@ -209,21 +218,21 @@ export default function AboutSection() {
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, ease: "easeOut" }}
                             viewport={{ amount: 0.5 }}
-                            className="max-w-xl space-y-8 text-white"
+                            className="max-w-xl space-y-8 text-black"
                         >
-                            <span className="font-mono text-xs uppercase tracking-[0.4em] text-cyan-300">
+                            <span className="font-mono text-xs uppercase tracking-[0.4em] text-blue-600">
                                 Discover More
                             </span>
                             <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter leading-none">
                                 Want to know{" "}
                                 <span className="italic font-light">more about us?</span>
                             </h2>
-                            <p className="text-lg md:text-xl font-light leading-relaxed text-white/70">
+                            <p className="text-lg md:text-xl font-light leading-relaxed text-black/70">
                                 Dive deeper into our story, meet the founder, and see what makes Tinted Media different.
                             </p>
                             <Link
                                 href="/about"
-                                className="magnetic group relative inline-flex items-center gap-4 px-10 py-5 bg-white text-black font-black text-xs uppercase tracking-widest rounded-full overflow-hidden transition-all hover:shadow-2xl"
+                                className="magnetic group relative inline-flex items-center gap-4 px-10 py-5 bg-black text-white font-black text-xs uppercase tracking-widest rounded-full overflow-hidden transition-all hover:shadow-2xl"
                             >
                                 <span className="relative z-10 flex items-center gap-2">
                                     Visit Full About Us Page
