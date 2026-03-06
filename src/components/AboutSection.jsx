@@ -9,7 +9,7 @@ const sections = [
     {
         id: "intro-spacer",
         title: "Spacer",
-        image: "/new/newblank.png",
+        image: "/1.png",
         bgColor: "#ffffff",
         isSpacer: true
     },
@@ -20,7 +20,7 @@ const sections = [
         subtitle: "The Identity",
         content: "Tinted Media is where strategy meets story — and where brands come to stand out. We're a modern creative and media agency crafting culture-driven campaigns, unforgettable narratives, and content designed to make people stop, look, and engage.",
         quote: "Because looking good isn't enough anymore. You have to mean something.",
-        image: "/new/2.png",
+        image: "/2.png",
         bgColor: "#0a1d37",
         textColor: "text-white",
         labelColor: "text-blue-300"
@@ -31,7 +31,7 @@ const sections = [
         phonetic: "/fɪlm & ˈfoʊ.toʊ/",
         subtitle: "01 // Production",
         content: "Cinematic videos and powerful photography that don't just play—they captivate and convert. We blend sharp strategy with bold storytelling to build identities people remember.",
-        image: "/new/newfilmcup.png",
+        image: "/3.png",
         bgColor: "#050505",
         textColor: "text-white",
         labelColor: "text-gray-400"
@@ -42,10 +42,11 @@ const sections = [
         phonetic: "/ˈsoʊ.ʃəlz/",
         subtitle: "02 // Engagement",
         content: "We don't just post—we build presence through storytelling, engagement, and consistent growth. We turn digital noise into real influence.",
-        image: "/new/newsm.png",
+        image: "/5.png",
         bgColor: "#feeae6",
         textColor: "text-black",
-        labelColor: "text-rose-500"
+        labelColor: "text-rose-500",
+        xOffset: "-translate-x-[1.4px]"
     },
     {
         id: "design",
@@ -53,10 +54,11 @@ const sections = [
         phonetic: "/dɪˈzaɪn/",
         subtitle: "03 // Branding",
         content: "Visuals that command attention. Bold, strategic, and unforgettable brand identities. Thoughtful. Bold. A little rebellious.",
-        image: "/new/newgd.png",
+        image: "/abcd.png",
         bgColor: "#1a1a1b",
         textColor: "text-white",
-        labelColor: "text-blue-400"
+        labelColor: "text-blue-400",
+        xOffset: "-translate-x-2"
     },
     {
         id: "performance",
@@ -135,7 +137,7 @@ export default function AboutSection() {
                                             y: index === 0 ? 0 : yInverse
                                         }}
                                     >
-                                        <div className="relative w-full aspect-square max-w-[850px]">
+                                        <div className={`relative w-full aspect-square max-w-[850px] ${section.xOffset || ''}`}>
                                             <Image
                                                 src={section.image}
                                                 alt={section.title}
@@ -173,7 +175,7 @@ export default function AboutSection() {
                             [0, 1, 1, 0]
                         );
 
-                        if (section.isSpacer) return <div key={section.id} className="h-[100vh]" />;
+                        if (section.isSpacer) return <div key={section.id} className="h-[40vh]" />;
 
                         return (
                             <div key={section.id} className={`${index === 0 ? "pt-10" : "pt-24"} h-[100vh] flex flex-col justify-start`}>
