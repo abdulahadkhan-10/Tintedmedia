@@ -132,17 +132,17 @@ export default function AboutSection() {
                             >
                                 {!section.isBlank && (
                                     <motion.div
-                                        className="absolute top-0 right-0 w-full lg:w-[70%] h-full flex items-start lg:items-center justify-center pt-16 lg:pt-4"
+                                        className="absolute top-0 right-0 w-full lg:w-[90%] h-full flex items-start lg:items-center justify-center pt-16 lg:pt-4"
                                         style={{
                                             y: index === 0 ? 0 : yInverse
                                         }}
                                     >
-                                        <div className={`relative w-full aspect-square max-w-[850px] ${section.xOffset || ''}`}>
+                                        <div className={`relative w-full aspect-square max-w-[1000px] ${section.xOffset || ''}`}>
                                             <Image
                                                 src={section.image}
                                                 alt={section.title}
                                                 fill
-                                                className="object-contain drop-shadow-[0_40px_80px_rgba(0,0,0,0.25)] scale-110"
+                                                className="object-contain drop-shadow-[0_40px_80px_rgba(0,0,0,0.25)] scale-125"
                                             />
                                         </div>
                                     </motion.div>
@@ -175,7 +175,7 @@ export default function AboutSection() {
                             [0, 1, 1, 0]
                         );
 
-                        if (section.isSpacer) return <div key={section.id} className="h-[40vh]" />;
+                        if (section.isSpacer) return <div key={section.id} className="h-[35vh]" />;
 
                         return (
                             <div key={section.id} className={`${index === 0 ? "pt-10" : "pt-24"} h-[100vh] flex flex-col justify-start`}>
