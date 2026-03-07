@@ -2,7 +2,7 @@ export const servicesData = {
     'film-photography': {
         title: "Film &",
         subtitle: "Photography",
-        image: "/services/film.jpg",
+        image: "/vertical banner/film.png",
         color: "#2a66ff",
         description: "We create cinematic videos that don’t just play — they captivate. Photography that makes you stop, stare, and remember.",
         features: [
@@ -14,7 +14,7 @@ export const servicesData = {
     'social-media-management': {
         title: "Social Media",
         subtitle: "Management",
-        image: "/services/social media.jpg",
+        image: "/vertical banner/smm.png",
         color: "#6366f1",
         description: "We don’t just post — we build presence. Our strategies are built around engagement, storytelling, and consistent growth.",
         features: [
@@ -26,7 +26,7 @@ export const servicesData = {
     'graphic-design': {
         title: "Graphic",
         subtitle: "Design",
-        image: "/services/gd copy.jpg",
+        image: "/vertical banner/graphicdesign.png",
         color: "#ef4444",
         description: "Design that doesn’t whisper — it commands attention. We craft visuals that are bold, strategic, and unforgettable.",
         features: [
@@ -38,7 +38,7 @@ export const servicesData = {
     'performance-management': {
         title: "Performance",
         subtitle: "Management",
-        image: "/services/pa.jpg",
+        image: "/vertical banner/perf.png",
         color: "#10b981",
         description: "Clicks are cute. Conversions are better. We create data-driven marketing campaigns that maximize ROI.",
         features: [
@@ -50,7 +50,7 @@ export const servicesData = {
     'web-development': {
         title: "Web",
         subtitle: "Development",
-        image: "/services/web.jpg",
+        image: "/vertical banner/web.png",
         color: "#0f172a",
         description: "Your website is your digital first impression. We build high-performing, fast, and SEO-friendly mobile-optimized experiences.",
         features: [
