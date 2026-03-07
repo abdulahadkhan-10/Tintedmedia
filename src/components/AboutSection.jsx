@@ -175,7 +175,7 @@ export default function AboutSection() {
                             [0, 1, 1, 0]
                         );
 
-                        if (section.isSpacer) return <div key={section.id} className="h-[35vh]" />;
+                        if (section.isSpacer) return <div key={section.id} className="h-[40vh]" />;
 
                         return (
                             <div key={section.id} className={`${index === 0 ? "pt-10" : "pt-24"} h-[100vh] flex flex-col justify-start`}>
