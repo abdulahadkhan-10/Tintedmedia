@@ -60,12 +60,8 @@ export default function Home() {
       <ClientGrid />
 
       {/* Video Carousel Section with sticky social text */}
-      <section className="py-20 relative overflow-hidden bg-gray-50/50">
-        <div className="absolute top-10 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 px-6 py-2 premium-glass rounded-full border border-black/5 text-xs font-bold uppercase tracking-[0.4em] text-electric-blue">
-          Live Productions
-        </div>
+      
         <VideoCarousel />
-      </section>
 
       {/* NEW: Bold Contact Section */}
       <ContactForm />

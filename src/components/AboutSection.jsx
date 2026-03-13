@@ -23,7 +23,7 @@ const sections = [
         image: "/2.png",
         bgColor: "#0a1d37",
         textColor: "text-white",
-        labelColor: "text-blue-300"
+        labelColor: "text-blue-200"
     },
     {
         id: "film",
@@ -32,9 +32,9 @@ const sections = [
         subtitle: "01 // Production",
         content: "Cinematic videos and powerful photography that don't just play—they captivate and convert. We blend sharp strategy with bold storytelling to build identities people remember.",
         image: "/3.png",
-        bgColor: "#050505",
-        textColor: "text-white",
-        labelColor: "text-gray-400"
+        bgColor: "#ffffff",
+        textColor: "text-black",
+        labelColor: "text-blue-600"
     },
     {
         id: "social",
@@ -43,9 +43,9 @@ const sections = [
         subtitle: "02 // Engagement",
         content: "We don't just post—we build presence through storytelling, engagement, and consistent growth. We turn digital noise into real influence.",
         image: "/5.png",
-        bgColor: "#feeae6",
-        textColor: "text-black",
-        labelColor: "text-rose-500",
+        bgColor: "#0a1d37",
+        textColor: "text-white",
+        labelColor: "text-blue-200",
         xOffset: "-translate-x-[1.4px]"
     },
     {
@@ -55,9 +55,9 @@ const sections = [
         subtitle: "03 // Branding",
         content: "Visuals that command attention. Bold, strategic, and unforgettable brand identities. Thoughtful. Bold. A little rebellious.",
         image: "/abcd.png",
-        bgColor: "#1a1a1b",
-        textColor: "text-white",
-        labelColor: "text-blue-400",
+        bgColor: "#ffffff",
+        textColor: "text-black",
+        labelColor: "text-blue-600",
         xOffset: "-translate-x-2"
     },
     {
@@ -67,9 +67,9 @@ const sections = [
         subtitle: "04 // Analytics",
         content: "Data-driven marketing that scales ROI and turns clicks into measurable revenue. We don't chase the digital pulse. We create it.",
         image: "/new/newpm.png",
-        bgColor: "#0c0c0c",
+        bgColor: "#0a1d37",
         textColor: "text-white",
-        labelColor: "text-emerald-500"
+        labelColor: "text-blue-200"
     },
     {
         id: "web",
@@ -78,7 +78,7 @@ const sections = [
         subtitle: "05 // Digital",
         content: "High-performing, SEO-friendly websites that design for performance and work hard for your business. Blending art with analytics.",
         image: "/new/newweb.png",
-        bgColor: "#dceefb",
+        bgColor: "#ffffff",
         textColor: "text-black",
         labelColor: "text-blue-600"
     }
@@ -111,8 +111,9 @@ export default function AboutSection() {
                 <div className="absolute inset-0 overflow-hidden">
                     {[...sections, { id: "cta-wipe", bgColor: sections[sections.length - 1].bgColor, isBlank: true }].map((section, index) => {
                         const totalSegments = sections.length + 1;
-                        const start = index / totalSegments;
-                        const end = (index + 0.4) / totalSegments;
+                        // Start arriving earlier by offsetting the start of the wipe
+                        const start = Math.max(0, (index - 0.5) / totalSegments);
+                        const end = (index + 0.5) / totalSegments;
 
                         // eslint-disable-next-line react-hooks/rules-of-hooks
                         const y = useTransform(smoothProgress, [start, end], ["100%", "0%"]);
@@ -165,20 +166,20 @@ export default function AboutSection() {
                         const end = (index + 1) * segmentSize;
 
                         // Text stays fully visible until the very last moment of the segment
-                        // For the first section (About), we want it visible immediately
+                        // Adjusted opacity range to match the earlier arrival/departure
                         // eslint-disable-next-line react-hooks/rules-of-hooks
                         const opacity = useTransform(
                             smoothProgress,
                             index === 0
-                                ? [0, 0.02, end - 0.05, end]
-                                : [start, start + 0.05, end - 0.05, end],
+                                ? [0, 0.02, end - 0.2, end]
+                                : [start - 0.1, start + 0.1, end - 0.2, end],
                             [0, 1, 1, 0]
                         );
 
-                        if (section.isSpacer) return <div key={section.id} className="h-[40vh]" />;
+                        if (section.isSpacer) return <div key={section.id} className="h-[30vh]" />;
 
                         return (
-                            <div key={section.id} className={`${index === 0 ? "pt-10" : "pt-24"} h-[100vh] flex flex-col justify-start`}>
+                            <div key={section.id} className={`${index === 0 ? "pt-10" : "pt-24"} h-[85vh] flex flex-col justify-start`}>
                                 <motion.div
                                     style={{ opacity }}
                                     className={`max-w-xl space-y-8 ${section.textColor}`}
