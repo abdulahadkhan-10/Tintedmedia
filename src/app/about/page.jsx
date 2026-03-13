@@ -20,7 +20,7 @@ const sections = [
     {
         id: "sadaf-khan",
         label: "02",
-        heading: "Sadaf Khan",
+        heading: "Meet Founder",
         body: [
             "Tinted Media was founded by Sadaf Khan, a creative strategist with an instinct for storytelling and a sharp eye for culture. With a background rooted in media, branding, and digital creativity, Sadaf saw the gap between what brands were saying and what audiences actually cared about. She understood early on that attention isn't bought — it's earned.",
             "So she built Tinted Media around one belief: Great brands aren't manufactured. They're crafted with intention. Her approach blends intuition with insight, art with analytics, and creativity with conversion.",
@@ -43,7 +43,7 @@ const sections = [
 ];
 
 const aboutUsContent = {
-    title: "About Tinted Media",
+    
     heading: "Tinted Media is where strategy meets story — and where brands come to stand out.",
     body: [
         "We’re a modern creative and media agency crafting culture-driven campaigns, unforgettable narratives, and content designed to make people stop, look, and engage. In a world of endless scrolling and short attention spans, we create work that cuts through the noise and actually sticks. Because looking good isn’t enough anymore. You have to mean something.",
