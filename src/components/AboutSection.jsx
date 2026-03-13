@@ -98,7 +98,7 @@ export default function AboutSection() {
     });
 
     return (
-        <section ref={containerRef} className="relative w-full">
+        <section ref={containerRef} className="relative w-full snap-y snap-mandatory">
 
             {/* ──────────────────────────────────────────────────
                 STICKY LAYER — backgrounds + cup in ONE container
@@ -111,7 +111,6 @@ export default function AboutSection() {
                 <div className="absolute inset-0 overflow-hidden">
                     {[...sections, { id: "cta-wipe", bgColor: sections[sections.length - 1].bgColor, isBlank: true }].map((section, index) => {
                         const totalSegments = sections.length + 1;
-                        // Start arriving earlier by offsetting the start of the wipe
                         const start = Math.max(0, (index - 0.5) / totalSegments);
                         const end = (index + 0.5) / totalSegments;
 
@@ -133,18 +132,56 @@ export default function AboutSection() {
                             >
                                 {!section.isBlank && (
                                     <motion.div
-                                        className="absolute top-0 right-0 w-full lg:w-[90%] h-full flex items-start lg:items-center justify-center pt-16 lg:pt-4"
+                                        className="absolute inset-0"
                                         style={{
                                             y: index === 0 ? 0 : yInverse
                                         }}
                                     >
-                                        <div className={`relative w-full aspect-square max-w-[1000px] ${section.xOffset || ''}`}>
-                                            <Image
-                                                src={section.image}
-                                                alt={section.title}
-                                                fill
-                                                className="object-contain drop-shadow-[0_40px_80px_rgba(0,0,0,0.25)] scale-125"
-                                            />
+                                        {/* ── Text Content ───────────────────── */}
+                                        {!section.isSpacer && (
+                                            <div className="absolute inset-0 flex items-center z-10">
+                                                <div className="w-full lg:w-3/5 px-8 md:px-16 lg:px-24">
+                                                    <div className={`max-w-xl space-y-8 ${section.textColor}`}>
+                                                        <div className="space-y-2">
+                                                            <span className={`font-mono text-xs uppercase tracking-[0.4em] ${section.labelColor}`}>
+                                                                {section.subtitle}
+                                                            </span>
+                                                            <div className="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-4">
+                                                                <h2 className="text-4xl md:text-7xl font-black uppercase tracking-tighter leading-none">
+                                                                    {section.title}
+                                                                </h2>
+                                                                <span className="font-serif italic text-xl md:text-2xl opacity-50">
+                                                                    {section.phonetic}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+
+                                                        <p className="text-lg md:text-xl font-light leading-relaxed opacity-90">
+                                                            {section.content}
+                                                        </p>
+
+                                                        {section.quote && (
+                                                            <blockquote className="border-l-4 border-electric-blue pl-6 py-2">
+                                                                <p className="text-xl md:text-2xl font-black italic uppercase leading-tight">
+                                                                    {section.quote}
+                                                                </p>
+                                                            </blockquote>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        {/* ── Image/Cup Content ──────────────── */}
+                                        <div className="absolute top-0 right-0 w-full lg:w-[90%] h-full flex items-start lg:items-center justify-center pt-16 lg:pt-4">
+                                            <div className={`relative w-full aspect-square max-w-[1000px] ${section.xOffset || ''}`}>
+                                                <Image
+                                                    src={section.image}
+                                                    alt={section.title}
+                                                    fill
+                                                    className="object-contain drop-shadow-[0_40px_80px_rgba(0,0,0,0.25)] scale-125"
+                                                />
+                                            </div>
                                         </div>
                                     </motion.div>
                                 )}
@@ -159,58 +196,10 @@ export default function AboutSection() {
             ────────────────────────────────────────────── */}
             <div className="relative" style={{ zIndex: 2 }}>
                 <div className="w-full lg:w-3/5 px-8 md:px-16 lg:px-24">
-                    {sections.map((section, index) => {
-                        const totalSegments = sections.length + 1;
-                        const segmentSize = 1 / totalSegments;
-                        const start = index * segmentSize;
-                        const end = (index + 1) * segmentSize;
-
-                        // Text stays fully visible until the very last moment of the segment
-                        // Adjusted opacity range to match the earlier arrival/departure
-                        // eslint-disable-next-line react-hooks/rules-of-hooks
-                        const opacity = useTransform(
-                            smoothProgress,
-                            index === 0
-                                ? [0, 0.02, end - 0.2, end]
-                                : [start - 0.1, start + 0.1, end - 0.2, end],
-                            [0, 1, 1, 0]
-                        );
-
-                        if (section.isSpacer) return <div key={section.id} className="h-[30vh]" />;
-
+                    {sections.map((section) => {
+                        if (section.isSpacer) return <div key={section.id} className="h-[30vh] snap-start" />;
                         return (
-                            <div key={section.id} className={`${index === 0 ? "pt-10" : "pt-24"} h-[85vh] flex flex-col justify-start`}>
-                                <motion.div
-                                    style={{ opacity }}
-                                    className={`max-w-xl space-y-8 ${section.textColor}`}
-                                >
-                                    <div className="space-y-2">
-                                        <span className={`font-mono text-xs uppercase tracking-[0.4em] ${section.labelColor}`}>
-                                            {section.subtitle}
-                                        </span>
-                                        <div className="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-4">
-                                            <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none">
-                                                {section.title}
-                                            </h2>
-                                            <span className="font-serif italic text-xl md:text-2xl opacity-50">
-                                                {section.phonetic}
-                                            </span>
-                                        </div>
-                                    </div>
-
-                                    <p className="text-lg md:text-xl font-light leading-relaxed opacity-90">
-                                        {section.content}
-                                    </p>
-
-                                    {section.quote && (
-                                        <blockquote className="border-l-4 border-electric-blue pl-6 py-2">
-                                            <p className="text-xl md:text-2xl font-black italic uppercase leading-tight">
-                                                {section.quote}
-                                            </p>
-                                        </blockquote>
-                                    )}
-                                </motion.div>
-                            </div>
+                            <div key={section.id} className="h-screen snap-start" />
                         );
                     })}
 
