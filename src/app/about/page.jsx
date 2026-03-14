@@ -78,20 +78,16 @@ export default function AboutPage() {
             </section>
 
             {/* ─── 2. About Us Content ──────────────────────── */}
-            <section className="relative z-10 bg-white px-8 md:px-16 py-12 md:py-20 border-b border-black/5">
-                <div className="max-w-7xl">
-                    <h2 className="text-[15px] uppercase tracking-[0.4em] font-bold text-electric-blue font-mono mb-12 block">
-                        {aboutUsContent.title}
-                    </h2>
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-20">
-                        <div>
-                            <h3 className="text-3xl md:text-5xl font-black tracking-tighter leading-[1.1] text-black">
-                                {aboutUsContent.heading}
-                            </h3>
-                        </div>
-                        <div className="space-y-8">
+             <section className="relative z-10 bg-white px-8 md:px-16 py-12 md:py-20 border-b border-black/5">
+                <div className="w-full">
+                 
+                    <div className="flex flex-col gap-12">
+                        <h3 className="text-4xl md:text-5xl font-black tracking-tighter leading-[1.1] text-black uppercase max-w-5xl">
+                            {aboutUsContent.heading}
+                        </h3>
+                        <div className="space-y-8 max-w-none">
                             {aboutUsContent.body.map((para, i) => (
-                                <p key={i} className="text-gray-500 text-lg md:text-xl leading-relaxed font-light">
+                                <p key={i} className="text-gray-900 text-xl md:text-2xl leading-relaxed font-light">
                                     {para}
                                 </p>
                             ))}

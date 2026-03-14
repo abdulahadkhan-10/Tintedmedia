@@ -109,10 +109,10 @@ export default function AboutSection() {
                     STICKY LAYER — integrated background + cup wipe
                 ────────────────────────────────────────────────── */}
                 <div className="absolute inset-0 overflow-hidden">
-                    {[...sections, { id: "cta-wipe", bgColor: sections[sections.length - 1].bgColor, isBlank: true }].map((section, index) => {
-                        const totalSegments = sections.length + 1;
-                        const start = Math.max(0, (index - 0.5) / totalSegments);
-                        const end = (index + 0.5) / totalSegments;
+                    {sections.map((section, index) => {
+                        const totalSegments = sections.length;
+                        const start = index === 0 ? 0 : (index - 0.5) / totalSegments;
+                        const end = index === totalSegments - 1 ? 1 : (index + 0.5) / totalSegments;
 
                         // eslint-disable-next-line react-hooks/rules-of-hooks
                         const y = useTransform(smoothProgress, [start, end], ["100%", "0%"]);
@@ -203,37 +203,7 @@ export default function AboutSection() {
                         );
                     })}
 
-                    {/* ── CTA Block ─────────────────── */}
-                    <div className="min-h-screen flex flex-col justify-center pt-20 pb-32">
-                        <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.8, ease: "easeOut" }}
-                            viewport={{ amount: 0.5 }}
-                            className="max-w-xl space-y-8 text-black"
-                        >
-                            <span className="font-mono text-xs uppercase tracking-[0.4em] text-blue-600">
-                                Discover More
-                            </span>
-                            <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter leading-none">
-                                Want to know{" "}
-                                <span className="italic font-light">more about us?</span>
-                            </h2>
-                            <p className="text-lg md:text-xl font-light leading-relaxed text-black/70">
-                                Dive deeper into our story, meet the founder, and see what makes Tinted Media different.
-                            </p>
-                            <Link
-                                href="/about"
-                                className="magnetic group relative inline-flex items-center gap-4 px-10 py-5 bg-black text-white font-black text-xs uppercase tracking-widest rounded-full overflow-hidden transition-all hover:shadow-2xl"
-                            >
-                                <span className="relative z-10 flex items-center gap-2">
-                                    Visit Full About Us Page
-                                    <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-                                </span>
-                                <div className="absolute inset-0 bg-electric-blue transform translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
-                            </Link>
-                        </motion.div>
-                    </div>
+                  
                 </div>
             </div>
         </section>

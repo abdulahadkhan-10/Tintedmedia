@@ -1,35 +1,35 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
 @import "tailwindcss";
-
+ 
 :root {
   --background: #ffffff;
   --foreground: #05070a;
-
+ 
   /* Premium Electric Palette */
   --electric-blue: #2a66ff;
   --electric-purple: #9d50bb;
   --neon-lime: #85c200;
   /* Darker version for white bg visibility */
   --soft-white: rgba(5, 7, 10, 0.9);
-
+ 
   --glass: rgba(0, 0, 0, 0.03);
   --glass-border: rgba(0, 0, 0, 0.08);
-
+ 
   /* Fonts */
   --font-body: 'Glacial Indifference', sans-serif;
   --font-heading: 'FreightPro', serif;
 }
-
+ 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-
+ 
   --color-electric-blue: var(--electric-blue);
   --color-electric-purple: var(--electric-purple);
   --color-neon-lime: var(--neon-lime);
-
+ 
   --font-sans: var(--font-body);
   --font-serif: var(--font-heading);
+  --font-mono: var(--font-body);
 }
 
 html {

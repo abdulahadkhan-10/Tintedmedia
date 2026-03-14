@@ -30,7 +30,7 @@ export default function Home() {
       <AboutSection />
 
       {/* BTS & UGC with premium background */}
-      <section className="py-16 md:py-24 relative overflow-hidden bg-white">
+      <section className="pt-8 pb-16 md:pt-12 md:pb-24 relative overflow-hidden bg-white">
         {/* Cinematic Background Orbs */}
         <div className="absolute top-1/2 left-0 w-96 h-96 bg-electric-blue/5 blur-[150px] rounded-full pointer-events-none z-0" />
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-electric-purple/5 blur-[150px] rounded-full pointer-events-none z-0" />
