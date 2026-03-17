@@ -15,37 +15,90 @@ const clients = [
     { name: "Vaaree", src: "/sponsers/vaaree logo .png" },
 ];
 
-export default function ClientGrid() {
-    return (
-        <section className="py-20 bg-white px-6">
-            <div className="max-w-7xl mx-auto">
-                <div className="text-center mb-16">
-                    <h3 className="text-electric-blue font-mono text-[12px] tracking-[0.4em] uppercase mb-4">Integrations</h3>
-                    <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter text-foreground">
-                        Global <span className="text-gray-400 italic font-light">Network</span>
-                    </h2>
-                </div>
+// Duplicate lists to create the seamless infinite scroll effect
+const seamlessClients = [...clients, ...clients];
+const seamlessClientsReversed = [...clients].reverse();
+const seamlessClients2 = [...seamlessClientsReversed, ...seamlessClientsReversed];
 
-                <div className="grid grid-cols-2 lg:grid-cols-3 border-t border-l border-black/5">
-                    {clients.map((client, idx) => (
-                        <motion.div
-                            key={idx}
-                            initial={{ opacity: 0 }}
-                            whileInView={{ opacity: 1 }}
-                            transition={{ delay: idx * 0.05 }}
-                            viewport={{ once: true }}
-                            className="h-40 border-r border-b border-black/5 flex items-center justify-center group relative overflow-hidden p-8"
-                        >
-                            <div className="absolute inset-0 bg-black/[0.02] translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
+const MarqueeRow = ({ items, reverse = false }) => {
+    return (
+        <div className="flex w-full overflow-hidden relative py-2">
+            <motion.div
+                className="flex w-max gap-4 md:gap-6 px-2 md:px-3"
+                animate={{ x: reverse ? ["-50%", "0%"] : ["0%", "-50%"] }}
+                transition={{
+                    repeat: Infinity,
+                    ease: "linear",
+                    duration: 35, // Adjust this value to change scroll speed
+                }}
+            >
+                {items.map((client, idx) => (
+                    <div
+                        key={idx}
+                        className="relative w-40 h-28 md:w-64 md:h-36 bg-white rounded-[1.2rem] md:rounded-[1.5rem] shadow-sm border border-neutral-100 flex items-center justify-center p-6 md:p-8 shrink-0"
+                    >
+                        <div className="relative w-full h-full">
                             <Image
                                 src={client.src}
                                 alt={client.name}
                                 fill
-                                className="object-contain grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 z-10 p-8"
+                                loading="lazy"
+                                className="object-contain"
                             />
-                        </motion.div>
-                    ))}
-                </div>
+                        </div>
+                    </div>
+                ))}
+            </motion.div>
+        </div>
+    );
+};
+
+export default function ClientGrid() {
+    return (
+        <section className="py-32 bg-neutral-50 overflow-hidden font-sans">
+            <div className="max-w-7xl mx-auto px-6 mb-20 text-center">
+                <motion.h3
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="text-neutral-400 font-medium tracking-widest uppercase text-sm mb-4"
+                >
+                    Trusted by industry leaders
+                </motion.h3>
+                <motion.h2
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.1 }}
+                    className="text-4xl md:text-5xl font-black tracking-tighter uppercase text-neutral-900"
+                >
+                    Global <span className="text-electric-blue font-light italic">Partners</span>
+                </motion.h2>
+            </div>
+
+            <div className="relative flex flex-col gap-2 md:gap-4 w-full">
+                {/* Gradient overlays to fade out the edges beautifully */}
+                <div className="absolute top-0 bottom-0 left-0 w-24 md:w-48 bg-gradient-to-r from-neutral-50 to-transparent z-10 pointer-events-none" />
+                <div className="absolute top-0 bottom-0 right-0 w-24 md:w-48 bg-gradient-to-l from-neutral-50 to-transparent z-10 pointer-events-none" />
+
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.1, duration: 0.8, ease: "easeOut" }}
+                >
+                    <MarqueeRow items={seamlessClients} />
+                </motion.div>
+
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.2, duration: 0.8, ease: "easeOut" }}
+                >
+                    {/* The second row rolls in the opposite direction automatically */}
+                    <MarqueeRow items={seamlessClients2} reverse={true} />
+                </motion.div>
             </div>
         </section>
     );

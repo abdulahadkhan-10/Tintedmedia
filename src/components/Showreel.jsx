@@ -1,74 +1,63 @@
 "use client";
-import React, { useState, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Play } from "lucide-react";
+import React, { useRef } from "react";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 
 export default function Showreel() {
-    const [isHovered, setIsHovered] = useState(false);
-    const [isPlaying, setIsPlaying] = useState(false);
-    const videoRef = useRef(null);
+    const containerRef = useRef(null);
 
-    const handlePlay = () => {
-        if (videoRef.current) {
-            videoRef.current.play();
-            setIsPlaying(true);
-        }
-    };
+    // Track scroll from top of section hitting top of viewport
+    // to bottom of section hitting bottom of viewport
+    const { scrollYProgress } = useScroll({
+        target: containerRef,
+        offset: ["start start", "end end"]
+    });
+
+    const smoothProgress = useSpring(scrollYProgress, { stiffness: 80, damping: 25, restDelta: 0.001 });
+
+    // Starts slightly bent (37 degrees) and stands up exactly as you scroll
+    const rotateX = useTransform(smoothProgress, [0, 1], [37, 0]);
+    // Start slightly larger since it's not bending back as far
+    const scale = useTransform(smoothProgress, [0, 1], [0.75, 1]);
+
+    // Softer glass glare since it is not lying as fast back against the light
+    const sheenOpacity = useTransform(smoothProgress, [0, 1], [0.4, 0]);
 
     return (
-        <section className="pt-28 pb-0 md:pt-32 md:pb-32 px-6 bg-white">
-            <div
-                className="max-w-7xl mx-auto relative group overflow-hidden rounded-[3rem] aspect-video bg-gray-100 border border-black/5 cursor-pointer shadow-lg"
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
-                onClick={handlePlay}
-            >
-                {/* Video Background */}
-                <video
-                    ref={videoRef}
-                    src="/showreel/TINTED REEL.mp4#t=2.1"
-                    loop
-                    muted
-                    playsInline
-                    preload="metadata"
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
-                />
+        <section
+            ref={containerRef}
+            // Section is taller than screen to create scroll distance
+            className="relative h-[200vh] w-full bg-transparent"
+        >
+            {/* Sticky container stays pinned until we finish scrolling past the section height */}
+            <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden" style={{ perspective: "3000px" }}>
+                <motion.div
+                    style={{ rotateX, scale, transformStyle: "preserve-3d" }}
+                    className="relative z-10 w-[95vw] md:w-[85vw] max-w-[1200px] aspect-video rounded-[1.5rem] md:rounded-[3.5rem] p-[2px] md:p-[4px] bg-gradient-to-br from-neutral-200 via-neutral-400 to-neutral-600 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.8)] mx-auto border border-white/50"
+                >
+                    {/* Thick Black Glass Bezel */}
+                    <div className="relative w-full h-full rounded-[1.4rem] md:rounded-[3.3rem] overflow-hidden bg-[#050505] p-2 md:p-5 border-[2px] border-black/80 shadow-2xl">
 
-                <AnimatePresence>
-                    {!isPlaying && (
-                        <motion.div
-                            initial={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.5 }}
-                            className="absolute inset-0 z-10 pointer-events-none"
-                        >
-                            {/* Overlay Gradient - Lighter for white theme */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                        {/* Inner active screen containing the video */}
+                        <div className="relative w-full h-full rounded-[1rem] md:rounded-[2.7rem] overflow-hidden bg-black shadow-inner">
 
-                            {/* Interactive Center Content */}
-                            <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-                                <motion.div
-                                    animate={{
-                                        scale: isHovered ? [1, 1.1, 1] : 1,
-                                    }}
-                                    transition={{ duration: 2, repeat: Infinity }}
-                                    className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 flex items-center justify-center mb-8 relative group"
-                                >
-                                    <div className="absolute inset-0 rounded-full bg-electric-blue/30 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
-                                    <Play fill="white" className="w-10 h-10 md:w-12 md:h-12 text-white ml-2 relative z-10" />
-                                </motion.div>
+                            {/* Dynamic Glare/Reflection sweeping across the glass as it stands up */}
+                            <motion.div
+                                style={{ opacity: sheenOpacity }}
+                                className="absolute inset-0 z-20 pointer-events-none bg-gradient-to-tr from-transparent via-white/40 to-white/5 mix-blend-overlay"
+                            />
 
-                                <h2 className="text-3xl md:text-6xl font-black text-white uppercase tracking-tighter leading-none select-none drop-shadow-2xl">
-                                    Show<span className="text-gray-200 italic pr-4">reel</span>
-                                </h2>
-                            </div>
-
-                            <div className="absolute bottom-12 right-12">
-                                <span className="text-[10px] uppercase tracking-[0.4em] font-bold text-white/80">© 2026 Tinted Media</span>
-                            </div>
-                        </motion.div>
-                    )}
-                </AnimatePresence>
+                            <video
+                                src="/showreel/TINTED REEL.mp4"
+                                autoPlay
+                                loop
+                                muted
+                                playsInline
+                                preload="metadata"
+                                className="absolute inset-0 w-full h-full object-cover"
+                            />
+                        </div>
+                    </div>
+                </motion.div>
             </div>
         </section>
     );
