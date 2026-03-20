@@ -61,7 +61,7 @@ export default function Home() {
 
       {/* Video Carousel Section with sticky social text */}
       
-        <VideoCarousel />
+        {/* <VideoCarousel /> */}
 
       {/* NEW: Bold Contact Section */}
       <ContactForm />

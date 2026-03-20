@@ -7,13 +7,6 @@ import Image from "next/image";
 
 const sections = [
     {
-        id: "intro-spacer",
-        title: "Spacer",
-        image: "/1.png",
-        bgColor: "#ffffff",
-        isSpacer: true
-    },
-    {
         id: "about",
         title: "About",
         phonetic: "/əˈbaʊt/",
