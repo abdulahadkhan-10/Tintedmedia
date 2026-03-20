@@ -26,19 +26,19 @@ export default function ServicePage({ params }) {
 
             {/* HERO SECTION */}
             <section
-                className={`relative overflow-hidden flex flex-col bg-white ${isVerticalBanner
-                    ? 'pt-0 min-h-[calc(100vh-6rem)]'
-                    : 'pt-40 pb-20 px-6 min-h-[90vh] justify-center'
+                className={`relative overflow-hidden flex flex-col bg-white mt-20 md:mt-24 ${isVerticalBanner
+                    ? 'h-[calc(100vh-5rem)] md:h-[calc(100vh-6rem)]'
+                    : 'px-6 h-[calc(100vh-5rem)] md:h-[calc(100vh-6rem)] justify-center'
                     }`}
             >
-                <div className={`mx-auto w-full relative z-10 ${isVerticalBanner ? 'max-w-none' : 'max-w-7xl'}`}>
-                    <div className={`grid grid-cols-1 lg:grid-cols-12 items-stretch ${isVerticalBanner ? 'gap-0 min-h-screen' : 'gap-12 items-center min-h-[80vh]'}`}>
+                <div className={`mx-auto w-full h-full relative z-10 ${isVerticalBanner ? 'max-w-none' : 'max-w-7xl'}`}>
+                    <div className={`grid grid-cols-1 lg:grid-cols-12 items-stretch h-full ${isVerticalBanner ? 'gap-0' : 'gap-12 items-center'}`}>
                         <motion.div
                             initial={{ opacity: 0, x: -50 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.8 }}
                             className={`${isVerticalBanner
-                                ? 'lg:col-span-6 px-8 md:px-16 lg:px-12 flex flex-col justify-center pt-32 pb-12 lg:pt-40 lg:pb-16'
+                                ? 'lg:col-span-6 px-8 md:px-16 lg:px-12 flex flex-col justify-center py-10 lg:py-16'
                                 : 'lg:col-span-7'
                                 }`}
                         >
@@ -72,7 +72,7 @@ export default function ServicePage({ params }) {
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ duration: 1, ease: "easeOut" }}
                             className={`${isVerticalBanner
-                                ? 'lg:col-span-6 relative min-h-[80vh] lg:min-h-screen order-first lg:order-last lg:mt-24'
+                                ? 'lg:col-span-6 relative order-first lg:order-last h-[50vh] lg:h-full'
                                 : 'lg:col-span-5 relative aspect-[4/5] rounded-[3rem] overflow-hidden shadow-2xl'
                                 }`}
                         >

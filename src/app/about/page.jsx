@@ -59,7 +59,7 @@ export default function AboutPage() {
             {/* ─── 1. Full-bleed banner ───────────────────── */}
             <section className="relative w-full overflow-hidden mt-20 md:mt-24">
                 <Image
-                    src="/new/Newbanner.png"
+                    src="/new/aboutuspage.png"
                     alt="Our Story"
                     width={1920}
                     height={720}
