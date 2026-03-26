@@ -1,145 +1,155 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
-import { Send } from "lucide-react";
+import { MapPin, Mail, Phone, Send } from "lucide-react";
 import Image from "next/image";
 
 export default function ContactForm() {
     return (
-        <section id="contact" className="py-20 px-6 bg-white border-t border-gray-100 relative overflow-hidden">
-            {/* Background Glow */}
-            <div className="absolute top-0 right-0 w-96 h-96 bg-electric-blue/5 blur-[150px] rounded-full pointer-events-none" />
+        <section
+            id="contact"
+            className="py-24 px-6 md:px-12 bg-[#F4F4F4] relative overflow-hidden min-h-screen flex flex-col items-center justify-center"
+        >
+            {/* ── BACKGROUND WIRE LAYERS ── */}
+            <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden select-none">
+                <motion.div
+                    initial={{ opacity: 0, x: -100 }}
+                    whileInView={{ opacity: 0.15, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 2, ease: "easeOut" }}
+                    className="absolute top-[5%] left-[-15%] md:left-[-3%] w-[600px] md:w-[1100px] h-[400px] md:h-[900px]"
+                >
+                    <Image src="/wireimage.png" alt="" fill className="object-contain object-left-top" />
+                </motion.div>
 
-            <div className="max-w-7xl mx-auto">
-                {/* Header Row */}
-                <div className="mb-12">
-                    <h3 className="text-electric-blue font-mono text-[10px] tracking-[0.4em] uppercase mb-2">Connect</h3>
-                    <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter leading-none text-black">
-                        Let's work <span className="text-gray-400 italic font-light">Together</span>
-                    </h2>
-                </div>
+                <motion.div
+                    initial={{ opacity: 0, x: 200 }}
+                    whileInView={{ opacity: 0.15, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 2.2, delay: 0.5, ease: "easeOut" }}
+                    className="absolute -bottom-16 right-[-20%] md:right-0 w-[100%] h-[200px] md:h-[380px]"
+                >
+                    <Image src="/wireimage.png" alt="" fill className="object-contain object-right-bottom" />
+                </motion.div>
+            </div>
 
-                {/* Main 3-column layout */}
-                <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.6fr_1fr] gap-8 items-start">
+            {/* ── MAIN CARD ── */}
+            <div className="relative z-10 max-w-6xl w-full px-4">
+                <motion.div
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.9, ease: "circOut" }}
+                    className="bg-white w-full rounded-[32px] md:rounded-[36px] shadow-[0_40px_120px_rgba(0,0,0,0.08)] border border-gray-100 overflow-hidden flex flex-col lg:flex-row"
+                    style={{ minHeight: "560px" }}
+                >
+                    {/* ─────────────────────────────────────────
+                        LEFT HALF — Full-bleed plug image only
+                    ───────────────────────────────────────── */}
+                    <div className="relative w-full lg:w-[45%] min-h-[250px] md:min-h-[360px] lg:min-h-full overflow-hidden bg-white">
+                        <Image
+                            src="/wireimage.png"
+                            alt="Plug Wire"
+                            fill
+                            className="object-cover object-left-top"
+                            sizes="(max-width: 1024px) 100vw, 45vw"
+                        />
+                    </div>
 
-                    {/* Left Image Column */}
-                    <motion.div
-                        initial={{ opacity: 0, x: -30 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.7 }}
-                        className="flex flex-col gap-6"
-                    >
-                        {/* PLUG image — dominant, hero */}
-                        <div className="relative w-full aspect-square rounded-3xl overflow-hidden shadow-xl ring-1 ring-black/5">
-                            <Image
-                                src="/connect/PLUG.jpg"
-                                alt="Let's Connect"
-                                fill
-                                className="object-cover"
-                            />
-                        </div>
+                    {/* ─────────────────────────────────────────
+                        RIGHT HALF — Title + Info strip + Form
+                    ───────────────────────────────────────── */}
+                    <div className="w-full lg:w-[55%] flex flex-col justify-between px-6 md:px-14 py-10 md:py-12">
 
-                        {/* Info blurb below */}
-                        <div className="space-y-4 pl-1">
-                            <p className="text-gray-500 text-sm font-light leading-relaxed">
+                        {/* Title & Introduction */}
+                        <div className="mb-10 text-center md:text-left">
+                            <h2 className="text-4xl md:text-5xl font-black tracking-tight text-[#111]">
+                                Contact <span className="italic font-light text-gray-400">Us</span>
+                            </h2>
+                            <div className="mt-4 w-12 h-[3px] bg-blue-500 rounded-full mb-6 mx-auto md:mx-0" />
+                            <p className="text-gray-500 text-base md:text-lg font-medium leading-relaxed max-w-sm mx-auto md:mx-0">
                                 Ready to plug in? Send us a message and we'll get back to you soon.
                             </p>
-                            <div className="space-y-3">
-                                <div className="space-y-1">
-                                    <p className="text-[10px] uppercase font-bold tracking-[0.3em] text-gray-400">Collab</p>
-                                    <a href="mailto:collab@tintedmedia.com" className="text-sm font-medium hover:text-electric-blue transition-colors text-black">
-                                        collab@tintedmedia.com
-                                    </a>
-                                </div>
-                                <div className="space-y-1">
-                                    <p className="text-[10px] uppercase font-bold tracking-[0.3em] text-gray-400">Interview</p>
-                                    <a href="mailto:join@tintedmedia.com" className="text-sm font-medium hover:text-electric-blue transition-colors text-black">
-                                        join@tintedmedia.com
-                                    </a>
-                                </div>
+                        </div>
+
+                        {/* Updated Contact Info Sections */}
+                        <div className="flex flex-col sm:flex-row lg:flex-col gap-8 mb-10 text-center md:text-left justify-center md:justify-start">
+                            <div className="flex-1">
+                                <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em] mb-1.5">
+                                    Collab
+                                </h3>
+                                <a href="mailto:collab@tintedmedia.com" className="text-[#111] font-bold text-lg hover:text-blue-500 transition-colors">
+                                    collab@tintedmedia.com
+                                </a>
+                            </div>
+                            <div className="flex-1">
+                                <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em] mb-1.5">
+                                    Interview
+                                </h3>
+                                <a href="mailto:join@tintedmedia.com" className="text-[#111] font-bold text-lg hover:text-blue-500 transition-colors">
+                                    join@tintedmedia.com
+                                </a>
                             </div>
                         </div>
-                    </motion.div>
 
-                    {/* Centre — Form */}
-                    <motion.form
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6, delay: 0.1 }}
-                        className="space-y-5 bg-gray-50/60 border border-black/5 rounded-3xl p-8 shadow-sm"
-                    >
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                            <div className="space-y-2">
-                                <label className="text-[10px] uppercase font-bold tracking-widest text-gray-400 px-1">Name</label>
-                                <input
-                                    type="text"
-                                    placeholder="John Doe"
-                                    className="w-full bg-white border border-gray-200 rounded-2xl px-5 py-3.5 text-black text-sm placeholder:text-gray-300 focus:outline-none focus:border-electric-blue transition-colors"
-                                />
+                        {/* Divider */}
+                        <div className="h-px bg-gray-100 mb-10" />
+
+                        {/* Form */}
+                        <form className="flex flex-col gap-6 flex-grow">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                                <div>
+                                    <label className="block text-[9px] font-black text-gray-400 uppercase tracking-widest mb-1.5">
+                                        First Name
+                                    </label>
+                                    <input
+                                        type="text"
+                                        className="w-full bg-gray-50 border border-gray-100 px-4 py-3 text-black text-sm focus:outline-none focus:border-gray-300 transition-all rounded-md"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-[9px] font-black text-gray-400 uppercase tracking-widest mb-1.5">
+                                        Last Name
+                                    </label>
+                                    <input
+                                        type="text"
+                                        className="w-full bg-gray-50 border border-gray-100 px-4 py-3 text-black text-sm focus:outline-none focus:border-gray-300 transition-all rounded-md"
+                                    />
+                                </div>
                             </div>
-                            <div className="space-y-2">
-                                <label className="text-[10px] uppercase font-bold tracking-widest text-gray-400 px-1">Email</label>
+
+                            <div>
+                                <label className="block text-[9px] font-black text-gray-400 uppercase tracking-widest mb-1.5">
+                                    E-mail
+                                </label>
                                 <input
                                     type="email"
-                                    placeholder="john@example.com"
-                                    className="w-full bg-white border border-gray-200 rounded-2xl px-5 py-3.5 text-black text-sm placeholder:text-gray-300 focus:outline-none focus:border-electric-blue transition-colors"
+                                    className="w-full bg-gray-50 border border-gray-100 px-4 py-3 text-black text-sm focus:outline-none focus:border-gray-300 transition-all rounded-md"
                                 />
                             </div>
-                        </div>
-                        <div className="space-y-2">
-                            <label className="text-[10px] uppercase font-bold tracking-widest text-gray-400 px-1">Subject</label>
-                            <select className="w-full bg-white border border-gray-200 rounded-2xl px-5 py-3.5 text-gray-500 text-sm focus:outline-none focus:border-electric-blue transition-colors appearance-none cursor-pointer">
-                                <option>Select a Service</option>
-                                <option>Social Media</option>
-                                <option>Digital Marketing</option>
-                                <option>Content Creation</option>
-                                <option>Talent Management</option>
-                                <option>BTS Production</option>
-                                <option>UGC</option>
-                            </select>
-                        </div>
-                        <div className="space-y-2">
-                            <label className="text-[10px] uppercase font-bold tracking-widest text-gray-400 px-1">Message</label>
-                            <textarea
-                                rows="4"
-                                placeholder="Tell us about your project..."
-                                className="w-full bg-white border border-gray-200 rounded-2xl px-5 py-3.5 text-black text-sm placeholder:text-gray-300 focus:outline-none focus:border-electric-blue transition-colors resize-none"
-                            />
-                        </div>
-                        <button className="w-full bg-black py-5 rounded-2xl font-black uppercase tracking-[0.3em] text-xs text-white flex items-center justify-center gap-3 group hover:bg-electric-blue transition-all duration-300">
-                            Send Message
-                            <Send size={14} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                        </button>
-                    </motion.form>
 
-                    {/* Right Image Column */}
-                    <motion.div
-                        initial={{ opacity: 0, x: 30 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.7, delay: 0.15 }}
-                        className="flex flex-col gap-6 items-end lg:items-center"
-                    >
-                        {/* Phone illustration — slightly smaller, offset */}
-                        <div className="relative w-[85%] aspect-square rounded-3xl overflow-hidden shadow-2xl ring-1 ring-black/5 rotate-2 hover:rotate-0 transition-transform duration-500">
-                            <Image
-                                src="/connect/IMG_4647 2.JPG"
-                                alt="Get in touch"
-                                fill
-                                className="object-cover"
-                            />
-                        </div>
+                            <div className="flex-grow flex flex-col">
+                                <label className="block text-[9px] font-black text-gray-400 uppercase tracking-widest mb-1.5">
+                                    Message
+                                </label>
+                                <textarea
+                                    rows="4"
+                                    className="w-full flex-grow bg-gray-50 border border-gray-100 px-4 py-3 text-black text-sm focus:outline-none focus:border-gray-300 transition-all resize-none rounded-md"
+                                />
+                            </div>
 
-                        {/* Decorative tag */}
-                        <div className="bg-black text-white rounded-2xl px-5 py-4 text-center w-[85%]">
-                            <p className="text-[9px] uppercase tracking-[0.4em] text-white/60 mb-1">Let's make something</p>
-                            <p className="text-xl font-black tracking-tighter">Memorable.</p>
-                        </div>
-                    </motion.div>
-
-                </div>
+                            <div className="flex flex-col sm:flex-row justify-between items-center pt-4 gap-6">
+                                <p className="text-[10px] text-gray-400 italic">Response within 24 hours.</p>
+                                <button
+                                    type="submit"
+                                    className="w-full sm:w-auto px-12 py-4 bg-[#a54238] text-white text-[10px] uppercase font-black tracking-[0.3em] hover:bg-[#111] shadow-[0_8px_30px_rgba(165,66,56,0.3)] hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-3"
+                                >
+                                    Submit <Send size={13} />
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </motion.div>
             </div>
         </section>
     );
