@@ -11,6 +11,7 @@ import ContactForm from "@/components/ContactForm";
 import Footer from "@/components/Footer";
 import Preloader from "@/components/Preloader";
 import { motion } from "framer-motion";
+import SlantedVideoScroll from "@/components/Reels";
 
 export default function Home() {
   return (
@@ -62,6 +63,7 @@ export default function Home() {
       {/* Video Carousel Section with sticky social text */}
       
         {/* <VideoCarousel /> */}
+        <SlantedVideoScroll/>
 
       {/* NEW: Bold Contact Section */}
       <ContactForm />

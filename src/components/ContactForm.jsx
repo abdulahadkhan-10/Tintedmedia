@@ -19,7 +19,7 @@ export default function ContactForm() {
                     transition={{ duration: 2, ease: "easeOut" }}
                     className="absolute top-[5%] left-[-15%] md:left-[-3%] w-[600px] md:w-[1100px] h-[400px] md:h-[900px]"
                 >
-                    <Image src="/wireimage.png" alt="" fill className="object-contain object-left-top" />
+                    <Image src="/contact us.png" alt="" fill className="object-contain object-left-top" />
                 </motion.div>
 
                 <motion.div
@@ -48,7 +48,7 @@ export default function ContactForm() {
                     ───────────────────────────────────────── */}
                     <div className="relative w-full lg:w-[45%] min-h-[250px] md:min-h-[360px] lg:min-h-full overflow-hidden bg-white">
                         <Image
-                            src="/wireimage.png"
+                            src="/contact us.png"
                             alt="Plug Wire"
                             fill
                             className="object-cover object-left-top"
