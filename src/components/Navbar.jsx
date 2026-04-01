@@ -17,14 +17,14 @@ const navLinks = [
     },
     {
         name: 'Services',
-        href: '#',
-        dropdown: [
-            { name: 'Film & Photography', href: '/services/film-photography' },
-            { name: 'Social Media Management', href: '/services/social-media-management' },
-            { name: 'Graphic Design', href: '/services/graphic-design' },
-            { name: 'Performance Management', href: '/services/performance-management' },
-            { name: 'Web Development', href: '/services/web-development' }
-        ]
+        href: '/services',
+        // dropdown: [
+        //     { name: 'Film & Photography', href: '/services/film-photography' },
+        //     { name: 'Social Media Management', href: '/services/social-media-management' },
+        //     { name: 'Graphic Design', href: '/services/graphic-design' },
+        //     { name: 'Performance Management', href: '/services/performance-management' },
+        //     { name: 'Web Development', href: '/services/web-development' }
+        // ]
     },
     {
         name: 'Universe',

@@ -1,5 +1,14 @@
+import { Inter, Instrument_Serif } from 'next/font/google';
 import "./globals.css";
 import CustomCursor from "@/components/CustomCursor";
+
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
+const instrumentSerif = Instrument_Serif({ 
+  weight: '400',
+  subsets: ['latin'],
+  style: 'italic',
+  variable: '--font-instrument'
+});
 
 export const metadata = {
   title: "Tinted Media",
@@ -11,8 +20,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className="antialiased">
+    <html lang="en" className={`${inter.variable} ${instrumentSerif.variable}`}>
+      <body className="antialiased font-sans">
         <CustomCursor />
         {children}
       </body>
