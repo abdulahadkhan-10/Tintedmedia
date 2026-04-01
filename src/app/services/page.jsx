@@ -8,20 +8,20 @@ import { Camera, Smartphone, Smile, Clock, Heart, Sparkles } from "lucide-react"
 
 const categories = [
     {
-        id: "brand",
-        title: "brand",
-        color: "#1a5d48", // Dark Green
+        id: "video",
+        title: "Film & Photography",
+        color: "#a3364d", // Berry/Marsala
         textColor: "text-white",
-        items: ["Brand Strategy", "360° Creative", "Art Direction", "Copywriting", "Editing", "Motion Graphics", "DTP"],
-        icon: <Camera className="w-12 h-12 text-black" />,
-        stickerBg: "bg-gray-200",
+        items: ["Campaign video", "Branded content", "Social content", "Marketing material", "Post-Production", "Cinematography"],
+        icon: <Clock className="w-10 h-10 text-orange-500" />,
+        stickerBg: "bg-yellow-100",
         rotation: -4,
-        href: "/services/graphic-design",
+        href: "/services/film-photography",
         zIndex: 10
     },
     {
         id: "social",
-        title: "social",
+        title: "Social Media Management",
         color: "#7fa7ff", // Light Blue
         textColor: "text-black",
         items: ["Social Media Strat", "Social Media Crea", "TikTok/Social Sh", "Influencer Camp", "Scheduling Sup", "Community Ma", "Social Listening"],
@@ -32,35 +32,35 @@ const categories = [
         zIndex: 20
     },
     {
-        id: "activations",
-        title: "activations",
-        color: "#ff824d", // Orange
-        textColor: "text-black",
-        items: ["Activation Strategy", "Event Planning", "Art Direction", "Production"],
-        icon: <Smile className="w-12 h-12 text-blue-500" />,
-        stickerBg: "bg-blue-100",
+        id: "brand",
+        title: "Graphic Design",
+        color: "#1a5d48", // Dark Green
+        textColor: "text-white",
+        items: ["Brand Strategy", "360° Creative", "Art Direction", "Copywriting", "Editing", "Motion Graphics", "DTP"],
+        icon: <Camera className="w-12 h-12 text-black" />,
+        stickerBg: "bg-gray-200",
         rotation: -2,
-        href: "/services/performance-management",
+        href: "/services/graphic-design",
         zIndex: 30
     },
     {
-        id: "video",
-        title: "video production",
-        color: "#a3364d", // Berry/Marsala
-        textColor: "text-white",
-        items: ["Campaign video", "Branded content", "Social content", "Marketing material"],
-        icon: <Clock className="w-10 h-10 text-orange-500" />,
-        stickerBg: "bg-yellow-100",
+        id: "activations",
+        title: "Performance Management",
+        color: "#ff824d", // Orange
+        textColor: "text-black",
+        items: ["Activation Strategy", "Event Planning", "Art Direction", "Production", "ROI Optimization", "Media Buying"],
+        icon: <Smile className="w-12 h-12 text-blue-500" />,
+        stickerBg: "bg-blue-100",
         rotation: 3,
-        href: "/services/film-photography",
+        href: "/services/performance-management",
         zIndex: 40
     },
     {
-        id: "partners",
-        title: "with partners",
+        id: "web",
+        title: "Web Development",
         color: "#e6adff", // Light Purple/Lilac
         textColor: "text-black",
-        items: ["PR/Journalism", "3D / VFX", "food styling", "Photography"],
+        items: ["Sleek Corporate", "E-commerce Power", "SEO Optimized", "Responsive Design", "Custom Solutions", "Maintenance"],
         icon: <Heart className="w-12 h-12 text-pink-500 fill-pink-500" />,
         stickerBg: "bg-white",
         rotation: -3,
@@ -143,7 +143,7 @@ export default function ServicesPage() {
                                     </Sticker>
 
                                     <div className={`mt-4 ${category.textColor}`}>
-                                        <h2 className="text-4xl font-black uppercase leading-none tracking-tighter mb-8 break-words">
+                                        <h2 className="text-2xl md:text-3xl font-black uppercase leading-tight tracking-tighter mb-8 break-words min-h-[4rem] flex items-center">
                                             {category.title}
                                         </h2>
                                         
@@ -175,7 +175,7 @@ export default function ServicesPage() {
             </section>
 
             {/* CTA Section */}
-            <section className="py-24 px-6 bg-black text-white text-center rounded-t-[4rem]">
+            {/* <section className="py-24 px-6 bg-black text-white text-center rounded-t-[4rem]">
                 <div className="max-w-4xl mx-auto">
                     <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter mb-8">
                         Got a vision? <br />
@@ -188,7 +188,7 @@ export default function ServicesPage() {
                         Start a Project
                     </Link>
                 </div>
-            </section>
+            </section> */}
 
             <Footer />
         </main>
