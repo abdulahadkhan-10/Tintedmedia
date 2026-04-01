@@ -16,7 +16,7 @@ const sections = [
         image: "/2.png",
         bgColor: "#0a1d37",
         textColor: "text-white",
-        labelColor: "text-blue-200"
+        labelColor: "text-blue-200" 
     },
     {
         id: "film",
