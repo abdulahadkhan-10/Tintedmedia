@@ -11,7 +11,7 @@ export default function ContactForm() {
             className="py-24 px-6 md:px-12 bg-[#F4F4F4] relative overflow-hidden min-h-screen flex flex-col items-center justify-center"
         >
             {/* ── BACKGROUND WIRE LAYERS ── */}
-            <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden select-none">
+            {/* <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden select-none">
                 <motion.div
                     initial={{ opacity: 0, x: -100 }}
                     whileInView={{ opacity: 0.15, x: 0 }}
@@ -31,7 +31,7 @@ export default function ContactForm() {
                 >
                     <Image src="/wireimage.png" alt="" fill className="object-contain object-right-bottom" />
                 </motion.div>
-            </div>
+            </div> */}
 
             {/* ── MAIN CARD ── */}
             <div className="relative z-10 max-w-6xl w-full px-4">
