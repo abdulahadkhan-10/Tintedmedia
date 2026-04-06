@@ -86,7 +86,7 @@ export default function BTSPage() {
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                     {[
-                        { src: "/bts/AQMXfnLdpF2tCxuUsGECQqDzS6SpYOCynQ6Cc5nkIuJ08CKSuZqfHGgk34hrJnqY7Cd5bShZUC3zQCTIrKfKzl9TYY_wfhP3MKvpVpM.mp4", link: "https://www.instagram.com/reel/DOvC2tdiDEK/?igsh=aTdvZnBqZjVlNnNl" },
+                        { src: "/bts/AQMXfnLdpF2tCxuUsGECQqDzS6SpYOCynQ6Cc5nkIuJ08CKSuZqfHGgk34hrJnqY7Cd5bShZUC3zQCTIrKfKzl9TYY_wfhP3MKvpVpM.mp4", link: "https://www.instagram.com/reel/DOBjKdLkpQm/?igsh=c20yem1nbmZnZGE0" },
                         { src: "/bts/AQPa0kLUvUPVRbBWdIUmqGI7CNb-zmqg8Puh8b8cc-TC3CB6zZsEUZm6WEgvcjHsIxWzRj1XToIlhUa3Xh6nJZPF-6B6q_wCdbiY4GM.mp4", link: "https://www.instagram.com/reel/DPN8RVKiMnt/?igsh=YW02cmxuMDh1a3hh" },
                         { src: "/bts/BTS for @tanghavri - @malaikaaroraofficial 🔥.mp4", link: "https://www.instagram.com/reel/DOBizHOEhls/?igsh=NXN3MHkybmRoOTdi" },
                         { src: "/bts/The second screenplay.. the one that runs parallel to the reel ft @khushikapoor @tanghavri.mp4", link: "https://www.instagram.com/reel/DOvC2tdiDEK/?igsh=aTdvZnBqZjVlNnNl" }
