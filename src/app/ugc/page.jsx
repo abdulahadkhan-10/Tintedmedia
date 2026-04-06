@@ -101,11 +101,11 @@ export default function UGCPage() {
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                     {[
-                        "/ugc/AQOBnTRQYXTdJ99zajSiGr4eLprGxpF_fNEMQ_YWzSUMXiNMiBUQcz0S5NrLBFzb_EfA4vE26C16J6JK6MwFKc-B.mp4",
-                        "/ugc/AQOI9PPc4LDeFLnyDbMPcqkSP8I-03jKso5W5ykTJjERTlUQlTH54toipeazkSTLkaXdqZS5EOIqk4ZQhNXKPBgP.mp4",
-                        "/ugc/AQP34EhfmaJTz-2BlyVB6b6JslMxwCjcFssOAsqvrbytJ3y7RO3Kte-yKv6OXpvS6lIZtMnX1kjQcbmFA77MoKIo.mp4",
-                        "/ugc/AQP_45TMsNYBMPeROGrA8EtjwQdnOB7Ur-Rrh_xPWXDjAuniOOx308kA6KZ4PpZo8B59uA9lf37wxb76MqO5S7P4.mp4"
-                    ].map((src, i) => (
+                        { src: "/ugc/AQOBnTRQYXTdJ99zajSiGr4eLprGxpF_fNEMQ_YWzSUMXiNMiBUQcz0S5NrLBFzb_EfA4vE26C16J6JK6MwFKc-B.mp4", link: "https://www.instagram.com/reel/DTkh8leDdpj/?igsh=MTdldW1ub2F1cmtvMA==" },
+                        { src: "/ugc/AQOI9PPc4LDeFLnyDbMPcqkSP8I-03jKso5W5ykTJjERTlUQlTH54toipeazkSTLkaXdqZS5EOIqk4ZQhNXKPBgP.mp4", link: "https://www.instagram.com/reel/DU-e8wnDUHj/?igsh=MThyaWRnazdkcG44NA==" },
+                        { src: "/ugc/AQP34EhfmaJTz-2BlyVB6b6JslMxwCjcFssOAsqvrbytJ3y7RO3Kte-yKv6OXpvS6lIZtMnX1kjQcbmFA77MoKIo.mp4", link: "https://www.instagram.com/reel/DTuef27DSn3/?igsh=c2hvczVrMm1hOGo4" },
+                        { src: "/ugc/AQP_45TMsNYBMPeROGrA8EtjwQdnOB7Ur-Rrh_xPWXDjAuniOOx308kA6KZ4PpZo8B59uA9lf37wxb76MqO5S7P4.mp4", link: "https://www.instagram.com/reel/DVBQn-hDcyx/?igsh=aGU2ZGY4a2N3bHUz" }
+                    ].map((item, i) => (
                         <motion.div
                             key={i}
                             initial={{ opacity: 0, y: 20 }}
@@ -114,20 +114,22 @@ export default function UGCPage() {
                             viewport={{ once: true }}
                             className="relative aspect-[9/16] rounded-[2.5rem] overflow-hidden bg-gray-100 shadow-xl group cursor-pointer"
                         >
-                            <video
-                                src={src}
-                                autoPlay
-                                loop
-                                muted
-                                playsInline
-                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 scale-50 group-hover:scale-100 transition-all">
-                                <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/30">
-                                    <div className="w-0 h-0 border-t-[6px] border-t-transparent border-l-[10px] border-l-white border-b-[6px] border-b-transparent ml-1" />
+                            <a href={item.link} target="_blank" rel="noopener noreferrer" className="block w-full h-full">
+                                <video
+                                    src={item.src}
+                                    autoPlay
+                                    loop
+                                    muted
+                                    playsInline
+                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 scale-50 group-hover:scale-100 transition-all">
+                                    <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/30">
+                                        <div className="w-0 h-0 border-t-[6px] border-t-transparent border-l-[10px] border-l-white border-b-[6px] border-b-transparent ml-1" />
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
                         </motion.div>
                     ))}
                 </div>

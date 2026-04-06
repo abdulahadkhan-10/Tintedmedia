@@ -6,14 +6,14 @@ import { motion } from "framer-motion";
 import { Play } from "lucide-react";
 
 const workReels = [
-  { id: 1, src: "/work/Video-111.mp4" },
-  { id: 2, src: "/work/Video-227.mp4" },
-  { id: 3, src: "/work/Video-280.mp4" },
-  { id: 4, src: "/work/Video-285.mp4" },
-  { id: 5, src: "/work/Video-557.mp4" },
-  { id: 6, src: "/work/Video-684.mp4" },
-  { id: 7, src: "/work/Video-840.mp4" },
-  { id: 8, src: "/work/Video-85.mp4" },
+  { id: 1, src: "/work/Video-111.mp4", link: "https://www.instagram.com/p/DSXgbalCtTP/" },
+  { id: 2, src: "/work/Video-227.mp4", link: "https://www.instagram.com/p/DKJ4AkAP53a/" },
+  { id: 3, src: "/work/Video-280.mp4", link: "https://www.instagram.com/p/DP811sFkUQv/" },
+  { id: 4, src: "/work/Video-285.mp4", link: "https://www.instagram.com/p/DTwjUYGCsy4/" },
+  { id: 5, src: "/work/Video-557.mp4", link: "https://www.instagram.com/p/DQ68-ajASsh/" },
+  { id: 6, src: "/work/Video-684.mp4", link: "https://www.instagram.com/p/DEINtPdTdt9/" },
+  { id: 7, src: "/work/Video-840.mp4", link: "https://www.instagram.com/p/C0gv8kZtJNx/" },
+  { id: 8, src: "/work/Video-85.mp4", link: "https://www.instagram.com/p/DTus38vjMx_/" },
 ];
 
 const WorkCard = ({ reel, index }) => (
@@ -24,7 +24,12 @@ const WorkCard = ({ reel, index }) => (
     viewport={{ once: true }}
     className="group relative h-full flex flex-col"
   >
-    <div className="relative aspect-[9/16] overflow-hidden rounded-[2rem] bg-zinc-100 shadow-xl group-hover:shadow-2xl transition-all duration-500 transform group-hover:-translate-y-2">
+    <a 
+      href={reel.link} 
+      target="_blank" 
+      rel="noopener noreferrer"
+      className="relative aspect-[9/16] overflow-hidden rounded-[2rem] bg-zinc-100 shadow-xl group-hover:shadow-2xl transition-all duration-500 transform group-hover:-translate-y-2 cursor-link"
+    >
       <video
         src={reel.src}
         autoPlay
@@ -43,7 +48,7 @@ const WorkCard = ({ reel, index }) => (
           <Play className="text-white fill-white w-6 h-6 ml-1" />
         </div>
       </div>
-    </div>
+    </a>
   </motion.div>
 );
 
@@ -121,6 +126,9 @@ export default function WorkPage() {
       <style jsx>{`
         .font-mono {
           font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        }
+        .cursor-link {
+          cursor: pointer;
         }
       `}</style>
     </main>
