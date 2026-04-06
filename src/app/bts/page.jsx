@@ -51,32 +51,6 @@ export default function BTSPage() {
                 </div>
             </section>
 
-            {/* Quote / Highlight */}
-            <section className="py-20 px-6 bg-gray-50 text-black">
-                <div className="max-w-4xl mx-auto text-center space-y-8">
-                    <p className="text-electric-blue font-mono text-xs tracking-[0.4em] uppercase">The Impact</p>
-                    <h2 className="text-2xl md:text-4xl font-black uppercase tracking-tighter leading-tight">
-                        We document the process to <span className="italic font-light">Humanize</span> your brand and build <span className="text-electric-blue">Anticipation.</span>
-                    </h2>
-                </div>
-            </section>
-
-            {/* Secondary Asset */}
-            <section className="py-32 px-6 max-w-7xl mx-auto">
-                <div className="relative h-[600px] rounded-[4rem] overflow-hidden border border-black/5 group">
-                    <Image
-                        src="/Stop.png"
-                        alt="Process Story"
-                        fill
-                        className="object-cover transition-transform duration-1000 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-                    <div className="absolute bottom-12 left-12">
-                        <span className="text-electric-blue font-mono text-xs tracking-widest uppercase mb-2 block">Production Archive // ON-SITE</span>
-                        <h3 className="text-2xl md:text-4xl font-black uppercase tracking-tighter text-white">Capturing the Chaos.</h3>
-                    </div>
-                </div>
-            </section>
 
             <section className="py-24 px-6 max-w-7xl mx-auto">
                 <div className="flex flex-col items-center mb-16 text-center">
