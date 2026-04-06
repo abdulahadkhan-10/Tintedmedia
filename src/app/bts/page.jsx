@@ -78,6 +78,46 @@ export default function BTSPage() {
                 </div>
             </section>
 
+            <section className="py-24 px-6 max-w-7xl mx-auto">
+                <div className="flex flex-col items-center mb-16 text-center">
+                    <span className="text-electric-blue font-mono text-[10px] uppercase tracking-[0.4em] mb-4">The Archive // REELS</span>
+                    <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter">Raw <span className="text-gray-400 italic font-light">Footage.</span></h2>
+                </div>
+                
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    {[
+                        "/bts/AQMXfnLdpF2tCxuUsGECQqDzS6SpYOCynQ6Cc5nkIuJ08CKSuZqfHGgk34hrJnqY7Cd5bShZUC3zQCTIrKfKzl9TYY_wfhP3MKvpVpM.mp4",
+                        "/bts/AQPa0kLUvUPVRbBWdIUmqGI7CNb-zmqg8Puh8b8cc-TC3CB6zZsEUZm6WEgvcjHsIxWzRj1XToIlhUa3Xh6nJZPF-6B6q_wCdbiY4GM.mp4",
+                        "/bts/BTS for @tanghavri - @malaikaaroraofficial 🔥.mp4",
+                        "/bts/The second screenplay.. the one that runs parallel to the reel ft @khushikapoor @tanghavri.mp4"
+                    ].map((src, i) => (
+                        <motion.div
+                            key={i}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ delay: i * 0.1 }}
+                            viewport={{ once: true }}
+                            className="relative aspect-[9/16] rounded-[2.5rem] overflow-hidden bg-gray-100 shadow-xl group cursor-pointer"
+                        >
+                            <video
+                                src={src}
+                                autoPlay
+                                loop
+                                muted
+                                playsInline
+                                className="w-full h-full object-cover grayscale-[0.3] group-hover:grayscale-0 transition-all duration-700"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 scale-50 group-hover:scale-100 transition-all">
+                                <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/30">
+                                    <div className="w-0 h-0 border-t-[6px] border-t-transparent border-l-[10px] border-l-white border-b-[6px] border-b-transparent ml-1" />
+                                </div>
+                            </div>
+                        </motion.div>
+                    ))}
+                </div>
+            </section>
+
             <Footer />
         </main>
     );

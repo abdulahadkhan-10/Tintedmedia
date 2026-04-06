@@ -1,5 +1,4 @@
-import React, { useRef, useState, useEffect, memo } from "react";
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 
 const videos = [
   "/showreel/Video0.mp4",
@@ -10,139 +9,321 @@ const videos = [
   "/showreel/Video6.mp4",
 ];
 
-// 🚀 Optimization: Memoized Card for performance
-const VideoCard = memo(({ src, index, isMobile, smoothProgress }) => {
-  const offset = index - 2.5;
+const N = videos.length;
+const AUTO_DELAY = 4500;
 
-  // ANIMATIONS (Always defined, but only applied via style on desktop)
-  const y = useTransform(smoothProgress, [0, 0.3, 0.65, 1], [340 + offset * 25, 20, -75, -125]);
-  const scale = useTransform(smoothProgress, [0, 0.3, 0.65, 1], [0.75, 1.14, 1.05, 0.87]);
-  const rotate = useTransform(smoothProgress, [0, 0.35, 0.75], [offset * -10, offset * 2, offset * 7]);
-  const opacity = useTransform(smoothProgress, [0, 0.2, 0.7, 1], [0.55, 1, 1, 0.48]);
+/* Returns shortest circular offset from center */
+const getOffset = (i, active) => {
+  let d = i - active;
+  if (d > N / 2) d -= N;
+  if (d < -N / 2) d += N;
+  return d;
+};
 
-  return (
-    <motion.div
-      className={`relative flex-shrink-0 snap-center overflow-hidden shadow-2xl border border-zinc-100 bg-zinc-50
-                 ${isMobile ? "w-[260px] aspect-[9/16] rounded-3xl" : "w-[148px] sm:w-[165px] md:w-[195px] lg:w-[225px] aspect-[9/16] rounded-[2.5rem]"}`}
-      style={!isMobile ? {
-        y, scale, rotate, opacity,
-        zIndex: 30 - Math.abs(Math.round(offset)),
-      } : { scrollSnapAlign: "center" }}
-    >
-      <video
-        src={src}
-        autoPlay
-        loop
-        muted
-        playsInline
-        className="w-full h-full object-cover"
-      />
-      <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-transparent to-black/35 pointer-events-none" />
-      <div className="absolute inset-0 ring-1 ring-inset ring-white/10 pointer-events-none" />
-    </motion.div>
-  );
-});
+/* Per-card 3D style */
+const cardStyle = (d, isMobile) => {
+  const absD = Math.abs(d);
+  const spacing = isMobile ? 130 : 215;
+  const rotateY = -d * 42;
+  const scale = Math.max(0.68, 1 - absD * 0.17);
+  const opacity = absD > 2 ? 0 : Math.max(0.25, 1 - absD * 0.38);
+  const brightness = absD === 0 ? 1 : Math.max(0.52, 1 - absD * 0.24);
+  const saturate = absD === 0 ? 1 : Math.max(0.55, 1 - absD * 0.28);
 
-VideoCard.displayName = "VideoCard";
+  return {
+    position: "absolute",
+    left: "50%",
+    top: "0",
+    transform: `translateX(calc(-50% + ${d * spacing}px)) rotateY(${rotateY}deg) scale(${scale})`,
+    opacity,
+    zIndex: absD > 2 ? -1 : 10 - absD,
+    filter: `brightness(${brightness}) saturate(${saturate})`,
+    pointerEvents: absD > 2 ? "none" : "auto",
+    cursor: d !== 0 ? "pointer" : "default",
+    transition:
+      "transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.45s ease, filter 0.45s ease",
+    willChange: "transform, opacity",
+  };
+};
 
-// Safe Hook for Mobile Detection
-function useIsMobile() {
+export default function Reels() {
+  const [active, setActive] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const intervalRef = useRef(null);
+  const touchStartX = useRef(null);
+
+  /* Responsive check */
   useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
+    const check = () => setIsMobile(window.innerWidth < 640);
     check();
     window.addEventListener("resize", check, { passive: true });
     return () => window.removeEventListener("resize", check);
   }, []);
-  return isMobile;
-}
 
-export default function Reels() {
-  const containerRef = useRef(null);
-  const scrollRef = useRef(null);
-  const isMobile = useIsMobile();
+  /* Navigation */
+  const go = useCallback((dir) => {
+    setActive((prev) => (prev + dir + N) % N);
+  }, []);
 
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"],
-  });
+  const goTo = useCallback(
+    (i) => {
+      setActive(i);
+      clearInterval(intervalRef.current);
+      intervalRef.current = setInterval(() => go(1), AUTO_DELAY);
+    },
+    [go]
+  );
 
-  const smoothProgress = useSpring(scrollYProgress, { stiffness: 65, damping: 24 });
-  
-  // High-performance heading transitions
-  const headingOpacity = useTransform(smoothProgress, [0, 0.2], [1, 0]);
-  const headingY = useTransform(smoothProgress, [0, 0.2], [0, -30]);
-
-  // 🔄 Mobile Auto-Scroll Logic
+  /* Auto-advance */
   useEffect(() => {
-    if (isMobile && scrollRef.current) {
-      const scroll = scrollRef.current;
-      let animationId;
-      let position = 0;
+    intervalRef.current = setInterval(() => go(1), AUTO_DELAY);
+    return () => clearInterval(intervalRef.current);
+  }, [go]);
 
-      const autoScroll = () => {
-        position += 0.5; // Smooth scroll speed
-        if (position >= scroll.scrollWidth - scroll.clientWidth) position = 0;
-        scroll.scrollLeft = position;
-        animationId = requestAnimationFrame(autoScroll);
-      };
-
-      const timeoutId = setTimeout(() => {
-        animationId = requestAnimationFrame(autoScroll);
-      }, 1500);
-
-      const stopOnTouch = () => {
-        cancelAnimationFrame(animationId);
-        clearTimeout(timeoutId);
-        scroll.removeEventListener("touchstart", stopOnTouch);
-      };
-
-      scroll.addEventListener("touchstart", stopOnTouch, { passive: true });
-
-      return () => {
-        cancelAnimationFrame(animationId);
-        clearTimeout(timeoutId);
-        scroll.removeEventListener("touchstart", stopOnTouch);
-      };
+  /* Swipe */
+  const onTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+  const onTouchEnd = (e) => {
+    if (touchStartX.current === null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX.current;
+    if (Math.abs(dx) > 45) {
+      go(dx < 0 ? 1 : -1);
+      clearInterval(intervalRef.current);
+      intervalRef.current = setInterval(() => go(1), AUTO_DELAY);
     }
-  }, [isMobile]);
+    touchStartX.current = null;
+  };
+
+  /* Card height = width * (16/9) */
+  const cardW = isMobile ? 150 : 200;
+  const stageH = Math.round(cardW * (16 / 9));
 
   return (
-    <section 
-      ref={containerRef}
-      className={`w-full bg-white relative overflow-visible ${isMobile ? "py-16 md:py-20" : "min-h-[260vh]"}`}
-    >
-      <style>{`
-        .hide-scrollbar::-webkit-scrollbar { display: none; }
-        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-      `}</style>
-      
-      <div className={`${isMobile ? "relative" : "sticky top-0 h-screen"} flex flex-col items-center justify-center overflow-hidden`}>
-        <motion.h1
-          style={!isMobile ? { opacity: headingOpacity, y: headingY } : {}}
-          className={`${isMobile ? "relative mb-12 text-center" : "absolute top-[12%] left-1/2 -translate-x-1/2 text-center z-40"} 
-                     text-5xl md:text-8xl font-black tracking-tight uppercase text-neutral-900`}
-        >
-          Our <span className="font-light italic text-blue-600">Work</span>
-        </motion.h1>
+    <section className="cf-section">
+      {/* ── Heading ── */}
+      <div className="cf-heading">
+        <h1>
+          Our <em>Work</em>
+        </h1>
+        {/* <p className="cf-sub">Click a reel or use the arrows</p> */}
+      </div>
 
-        <div 
-          ref={scrollRef}
-          className={`flex hide-scrollbar ${isMobile 
-            ? "overflow-x-auto snap-x snap-mandatory w-full px-10 gap-5" 
-            : "gap-4 md:gap-10 mt-[-40px] items-center justify-center w-full"}`}
-        >
-          {videos.map((src, index) => (
-            <VideoCard 
-              key={index} 
-              src={src} 
-              index={index} 
-              isMobile={isMobile} 
-              smoothProgress={smoothProgress} 
-            />
-          ))}
+      {/* ── Stage ── */}
+      <div
+        className="cf-stage"
+        style={{ perspective: "1300px", height: `${stageH}px` }}
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
+      >
+        <div className="cf-track" style={{ transformStyle: "preserve-3d" }}>
+          {videos.map((src, i) => {
+            const d = getOffset(i, active);
+            return (
+              <div
+                key={i}
+                className="cf-card"
+                style={{
+                  ...cardStyle(d, isMobile),
+                  width: `${cardW}px`,
+                }}
+                onClick={() => d !== 0 && goTo(i)}
+              >
+                <video
+                  src={src}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="cf-video"
+                />
+                <div className="cf-gloss" />
+                {/* Reflection strip on active card */}
+                {d === 0 && <div className="cf-active-ring" />}
+              </div>
+            );
+          })}
         </div>
       </div>
+
+      {/* ── Arrows ── */}
+      <button
+        className="cf-arrow cf-arrow--prev"
+        onClick={() => { go(-1); clearInterval(intervalRef.current); intervalRef.current = setInterval(() => go(1), AUTO_DELAY); }}
+        aria-label="Previous reel"
+      >
+        ‹
+      </button>
+      <button
+        className="cf-arrow cf-arrow--next"
+        onClick={() => { go(1); clearInterval(intervalRef.current); intervalRef.current = setInterval(() => go(1), AUTO_DELAY); }}
+        aria-label="Next reel"
+      >
+        ›
+      </button>
+
+      {/* ── Dots ── */}
+      <div className="cf-dots">
+        {videos.map((_, i) => (
+          <button
+            key={i}
+            className={`cf-dot ${i === active ? "cf-dot--active" : ""}`}
+            onClick={() => goTo(i)}
+            aria-label={`Go to reel ${i + 1}`}
+          />
+        ))}
+      </div>
+
+      <style>{`
+        /* ─── SECTION ─── */
+        .cf-section {
+          width: 100%;
+          background: #fff;
+          padding: 5.5rem 0 5rem;
+          position: relative;
+          overflow: hidden;
+        }
+
+        /* ─── HEADING ─── */
+        .cf-heading {
+          text-align: center;
+          margin-bottom: 3rem;
+          padding: 0 1rem;
+        }
+        .cf-heading h1 {
+          font-size: clamp(3rem, 9vw, 7rem);
+          font-weight: 900;
+          text-transform: uppercase;
+          letter-spacing: -0.03em;
+          color: #0a0a0a;
+          font-style: normal;
+          line-height: 1;
+          margin: 0 0 0.55rem;
+        }
+        .cf-heading h1 em {
+          font-style: italic;
+          font-weight: 300;
+          color: #2563eb;
+        }
+        .cf-sub {
+          font-size: 0.78rem;
+          color: #9ca3af;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          font-weight: 500;
+          margin: 0;
+        }
+
+        /* ─── STAGE ─── */
+        .cf-stage {
+          position: relative;
+          width: 100%;
+          max-width: 1200px;
+          margin: 0 auto;
+          user-select: none;
+        }
+        .cf-track {
+          position: absolute;
+          inset: 0;
+        }
+
+        /* ─── CARD ─── */
+        .cf-card {
+          height: 100%;
+          border-radius: 1.75rem;
+          overflow: hidden;
+          background: #18181b;
+          box-shadow:
+            0 20px 60px rgba(0, 0, 0, 0.18),
+            0 4px 16px rgba(0, 0, 0, 0.10);
+        }
+        .cf-video {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+          pointer-events: none;
+        }
+        .cf-gloss {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(
+            160deg,
+            rgba(255,255,255,0.08) 0%,
+            transparent 45%,
+            rgba(0,0,0,0.42) 100%
+          );
+          pointer-events: none;
+        }
+        .cf-active-ring {
+          position: absolute;
+          inset: 0;
+          border-radius: 1.75rem;
+          box-shadow: inset 0 0 0 2px rgba(255,255,255,0.18);
+          pointer-events: none;
+        }
+
+        /* ─── ARROWS ─── */
+        .cf-arrow {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          background: rgba(10,10,10,0.08);
+          backdrop-filter: blur(8px);
+          border: 1px solid rgba(0,0,0,0.08);
+          border-radius: 50%;
+          width: 48px;
+          height: 48px;
+          font-size: 1.8rem;
+          line-height: 1;
+          color: #111;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: background 0.2s, transform 0.2s;
+          z-index: 50;
+          padding-bottom: 2px;
+        }
+        .cf-arrow:hover {
+          background: rgba(37,99,235,0.12);
+          border-color: rgba(37,99,235,0.25);
+          transform: translateY(-50%) scale(1.08);
+        }
+        .cf-arrow--prev { left: clamp(8px, 3vw, 40px); }
+        .cf-arrow--next { right: clamp(8px, 3vw, 40px); }
+
+        /* ─── DOTS ─── */
+        .cf-dots {
+          display: flex;
+          justify-content: center;
+          gap: 8px;
+          margin-top: 2.2rem;
+        }
+        .cf-dot {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background: rgba(0,0,0,0.15);
+          border: none;
+          cursor: pointer;
+          transition: background 0.25s, transform 0.25s, width 0.3s;
+          padding: 0;
+        }
+        .cf-dot--active {
+          background: #2563eb;
+          width: 24px;
+          border-radius: 4px;
+        }
+
+        @media (max-width: 640px) {
+          .cf-arrow { width: 38px; height: 38px; font-size: 1.5rem; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .cf-card { transition: none !important; }
+        }
+      `}</style>
     </section>
   );
 }

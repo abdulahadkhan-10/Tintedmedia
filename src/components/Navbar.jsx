@@ -9,11 +9,7 @@ const navLinks = [
     { name: 'About', href: '/about' },
     {
         name: 'Work',
-        href: '#',
-        dropdown: [
-            { name: 'Showreel', href: '/showreel' },
-            { name: 'Client Work', href: '/work' }
-        ]
+        href: '/work',
     },
     {
         name: 'Services',
@@ -32,12 +28,11 @@ const navLinks = [
         dropdown: [
             { name: 'BTS', href: '/bts' },
             {
-                name: 'Talent Management',
-                href: '#',
+                name: 'UGC',
+                href: '/ugc',
                 subDropdown: [
                     { name: 'Creator/Influencer', href: '#' },
-                    { name: 'Actor', href: '#' },
-                    { name: 'UGC', href: '/ugc' }
+                    { name: 'Actor', href: '#' }
                 ]
             }
         ]
@@ -127,10 +122,13 @@ export default function Navbar() {
                                                     onClick={() => subItem.subDropdown && setActiveSubDropdown(activeSubDropdown === subItem.name ? null : subItem.name)}
                                                 >
                                                     {subItem.subDropdown ? (
-                                                        <div className="px-4 py-3 rounded-xl hover:bg-gray-50 text-[9px] uppercase tracking-[0.2em] font-bold text-gray-500 hover:text-electric-blue transition-all flex items-center justify-between cursor-pointer">
+                                                        <Link
+                                                            href={subItem.href}
+                                                            className="px-4 py-3 rounded-xl hover:bg-gray-50 text-[9px] uppercase tracking-[0.2em] font-bold text-gray-500 hover:text-electric-blue transition-all flex items-center justify-between cursor-pointer"
+                                                        >
                                                             {subItem.name}
                                                             <ChevronRight className="w-3 h-3" />
-                                                        </div>
+                                                        </Link>
                                                     ) : (
                                                         <Link
                                                             href={subItem.href}
@@ -230,15 +228,19 @@ export default function Navbar() {
                                                                 {item.dropdown.map((subItem) => (
                                                                     <div key={subItem.name}>
                                                                         {subItem.subDropdown ? (
-                                                                            <div className="py-2">
+                                                                            <div className="py-2 flex items-center justify-between group">
+                                                                                <Link
+                                                                                    href={subItem.href}
+                                                                                    onClick={() => setIsMobileMenuOpen(false)}
+                                                                                    className={`text-sm font-bold uppercase tracking-widest transition-colors ${activeMobileSubAccordion === subItem.name ? 'text-electric-blue' : 'text-gray-500 hover:text-black'}`}
+                                                                                >
+                                                                                    {subItem.name}
+                                                                                </Link>
                                                                                 <button
                                                                                     onClick={() => setActiveMobileSubAccordion(activeMobileSubAccordion === subItem.name ? null : subItem.name)}
-                                                                                    className="w-full flex justify-between items-center group"
+                                                                                    className="p-2"
                                                                                 >
-                                                                                    <span className={`text-sm font-bold uppercase tracking-widest transition-colors ${activeMobileSubAccordion === subItem.name ? 'text-electric-blue' : 'text-gray-500 hover:text-black'}`}>
-                                                                                        {subItem.name}
-                                                                                    </span>
-                                                                                    <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${activeMobileSubAccordion === subItem.name ? 'rotate-180' : ''}`} />
+                                                                                    <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${activeMobileSubAccordion === subItem.name ? 'rotate-180 text-electric-blue' : 'text-gray-400'}`} />
                                                                                 </button>
                                                                                 <AnimatePresence>
                                                                                     {activeMobileSubAccordion === subItem.name && (
