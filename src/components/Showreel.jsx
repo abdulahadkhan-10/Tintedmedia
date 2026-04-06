@@ -1,12 +1,12 @@
 "use client";
-import React, { useRef } from "react";
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import React, { useRef, useState } from "react";
+import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "framer-motion";
 
 export default function Showreel() {
     const containerRef = useRef(null);
+    const [isVideoLoaded, setIsVideoLoaded] = useState(false);
 
     // Track scroll from top of section hitting top of viewport
-    // to bottom of section hitting bottom of viewport
     const { scrollYProgress } = useScroll({
         target: containerRef,
         offset: ["start start", "end end"]
@@ -16,19 +16,14 @@ export default function Showreel() {
 
     // Starts slightly bent (37 degrees) and stands up exactly as you scroll
     const rotateX = useTransform(smoothProgress, [0, 1], [37, 0]);
-    // Start slightly larger since it's not bending back as far
     const scale = useTransform(smoothProgress, [0, 1], [0.75, 1]);
-
-    // Softer glass glare since it is not lying as fast back against the light
     const sheenOpacity = useTransform(smoothProgress, [0, 1], [0.4, 0]);
 
     return (
         <section
             ref={containerRef}
-            // Section is taller than screen to create scroll distance
             className="relative h-[200vh] w-full bg-transparent"
         >
-            {/* Sticky container stays pinned until we finish scrolling past the section height */}
             <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden" style={{ perspective: "3000px" }}>
                 <motion.div
                     style={{ rotateX, scale, transformStyle: "preserve-3d" }}
@@ -39,20 +34,51 @@ export default function Showreel() {
 
                         {/* Inner active screen containing the video */}
                         <div className="relative w-full h-full rounded-[1rem] md:rounded-[2.7rem] overflow-hidden bg-black shadow-inner">
+                            
+                            {/* Loading State Overlay */}
+                            <AnimatePresence>
+                                {!isVideoLoaded && (
+                                    <motion.div 
+                                        initial={{ opacity: 1 }}
+                                        exit={{ opacity: 0 }}
+                                        className="absolute inset-0 z-30 bg-[#0a0a0a] flex flex-col items-center justify-center"
+                                    >
+                                        <div className="relative">
+                                            <motion.h2 
+                                                animate={{ opacity: [0.3, 1, 0.3] }}
+                                                transition={{ duration: 2, repeat: Infinity }}
+                                                className="text-white font-black text-2xl md:text-5xl tracking-[0.2em] uppercase italic"
+                                            >
+                                                Tinted
+                                            </motion.h2>
+                                            <div className="absolute -bottom-4 left-0 w-full h-[1px] bg-white/10 overflow-hidden">
+                                                <motion.div 
+                                                    animate={{ x: ["-100%", "100%"] }}
+                                                    transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+                                                    className="w-1/2 h-full bg-electric-blue shadow-[0_0_15px_rgba(59,130,246,0.8)]"
+                                                />
+                                            </div>
+                                        </div>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
 
-                            {/* Dynamic Glare/Reflection sweeping across the glass as it stands up */}
+                            {/* Dynamic Glare/Reflection */}
                             <motion.div
                                 style={{ opacity: sheenOpacity }}
                                 className="absolute inset-0 z-20 pointer-events-none bg-gradient-to-tr from-transparent via-white/40 to-white/5 mix-blend-overlay"
                             />
 
-                            <video
+                            <motion.video
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: isVideoLoaded ? 1 : 0 }}
+                                transition={{ duration: 1 }}
                                 src="/showreel/TINTED REEL.mp4"
                                 autoPlay
                                 loop
                                 muted
                                 playsInline
-                                preload="metadata"
+                                onLoadedData={() => setIsVideoLoaded(true)}
                                 className="absolute inset-0 w-full h-full object-cover"
                             />
                         </div>
@@ -61,4 +87,4 @@ export default function Showreel() {
             </div>
         </section>
     );
-}
+}
