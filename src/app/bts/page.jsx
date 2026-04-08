@@ -55,7 +55,7 @@ export default function BTSPage() {
             <section className="py-24 px-6 max-w-7xl mx-auto">
                 <div className="flex flex-col items-center mb-16 text-center">
                     <span className="text-electric-blue font-mono text-[10px] uppercase tracking-[0.4em] mb-4">The Archive // REELS</span>
-                    <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter">Raw <span className="text-gray-400 italic font-light">Footage.</span></h2>
+                    <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter">BTS <span className="text-gray-400 italic font-light">Footage.</span></h2>
                 </div>
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
