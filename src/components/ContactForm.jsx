@@ -5,8 +5,8 @@ import { Mail, Send, CheckCircle2, Loader2 } from "lucide-react";
 import Image from "next/image";
 
 // WEB3FORMS CONFIGURATION
-// Go to web3forms.com and get your Access Key for Sadaf@tintedmedia.co
-const WEB3FORMS_ACCESS_KEY = "YOUR_ACCESS_KEY_HERE";
+// Live Access Key for Sadaf@tintedmedia.co
+const WEB3FORMS_ACCESS_KEY = "cc59aa9d-dc46-4e3d-a726-850a4e469d0e";
 
 export default function ContactForm() {
     const [purpose, setPurpose] = useState("collab"); // "collab" or "join"
