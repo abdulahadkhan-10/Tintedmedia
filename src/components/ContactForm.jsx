@@ -4,12 +4,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Mail, Send, CheckCircle2, Loader2 } from "lucide-react";
 import Image from "next/image";
 
-// FORMSPREE CONFIGURATION
-// Create two forms on Formspree and paste your IDs here
-const FORMSPREE_ENDPOINTS = {
-    collab: "YOUR_COLLAB_FORM_ID", // e.g., "mqkvpzvj"
-    join: "YOUR_JOIN_FORM_ID",     // e.g., "xyzkpzvj"
-};
+// WEB3FORMS CONFIGURATION
+// Go to web3forms.com and get your Access Key for Sadaf@tintedmedia.co
+const WEB3FORMS_ACCESS_KEY = "YOUR_ACCESS_KEY_HERE";
 
 export default function ContactForm() {
     const [purpose, setPurpose] = useState("collab"); // "collab" or "join"
@@ -30,26 +27,27 @@ export default function ContactForm() {
         e.preventDefault();
         setStatus("loading");
 
-        const endpointId = FORMSPREE_ENDPOINTS[purpose];
-        const endpoint = `https://formspree.io/f/${endpointId}`;
-
         try {
-            const response = await fetch(endpoint, {
+            const response = await fetch("https://api.web3forms.com/submit", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     "Accept": "application/json"
                 },
                 body: JSON.stringify({
-                    purpose: purpose.toUpperCase(),
-                    ...formData
+                    access_key: WEB3FORMS_ACCESS_KEY,
+                    subject: `New ${purpose.toUpperCase()} Inquiry from ${formData.firstName}`,
+                    from_name: `${formData.firstName} ${formData.lastName}`,
+                    ...formData,
+                    inquiry_type: purpose.toUpperCase()
                 })
             });
 
-            if (response.ok) {
+            const result = await response.json();
+
+            if (result.success) {
                 setStatus("success");
                 setFormData({ firstName: "", lastName: "", email: "", message: "" });
-                // Reset after 5 seconds to allow new submissions
                 setTimeout(() => setStatus("idle"), 5000);
             } else {
                 setStatus("error");
@@ -93,7 +91,7 @@ export default function ContactForm() {
                             </h2>
                             <div className="mt-4 w-12 h-[3px] bg-[#a54238] rounded-full mb-6 mx-auto md:mx-0" />
                             <p className="text-gray-500 text-base font-medium leading-relaxed max-w-sm mx-auto md:mx-0">
-                                Choose your purpose and send us a message.
+                                Have a project in mind? Reach out to <span className="text-[#111] font-bold">Sadaf@tintedmedia.co</span> below.
                             </p>
                         </div>
 
@@ -113,10 +111,10 @@ export default function ContactForm() {
                                 }`}>
                                     Collaboration
                                 </span>
-                                <span className="text-[#111] font-bold text-sm">collab@tintedmedia.com</span>
+                                <span className="text-[#111] font-bold text-sm">Business Inquiry</span>
                                 {purpose === "collab" && (
                                     <motion.div layoutId="active-indicator" className="absolute top-3 right-3">
-                                        <div className="w-2 h-2 rounded-full bg-[#a54238]" />
+                                        <div className="w-1.5 h-1.5 rounded-full bg-[#a54238]" />
                                     </motion.div>
                                 )}
                             </button>
@@ -133,12 +131,12 @@ export default function ContactForm() {
                                 <span className={`text-[9px] font-black uppercase tracking-[0.2em] mb-1.5 ${
                                     purpose === "join" ? "text-[#a54238]" : "text-gray-400"
                                 }`}>
-                                    Hiring / Interview
+                                    Join The Team
                                 </span>
-                                <span className="text-[#111] font-bold text-sm">join@tintedmedia.com</span>
+                                <span className="text-[#111] font-bold text-sm">Hiring / Careers</span>
                                 {purpose === "join" && (
                                     <motion.div layoutId="active-indicator" className="absolute top-3 right-3">
-                                        <div className="w-2 h-2 rounded-full bg-[#a54238]" />
+                                        <div className="w-1.5 h-1.5 rounded-full bg-[#a54238]" />
                                     </motion.div>
                                 )}
                             </button>
