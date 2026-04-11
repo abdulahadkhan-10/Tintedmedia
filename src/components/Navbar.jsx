@@ -302,21 +302,12 @@ export default function Navbar() {
 
                             <div className="mt-auto space-y-4 pt-10">
                                 <div className="space-y-1">
-                                    <p className="text-[10px] uppercase font-bold tracking-[0.4em] text-gray-400">Collaboration</p>
+                                    <p className="text-[10px] uppercase font-bold tracking-[0.4em] text-gray-400">Inquiries</p>
                                     <a
-                                        href="mailto:collab@tintedmedia.com"
-                                        className="text-lg font-light text-black hover:text-electric-blue transition-colors"
+                                        href="mailto:Sadaf@tintedmedia.co"
+                                        className="text-2xl font-light text-black hover:text-electric-blue transition-colors"
                                     >
-                                        collab@tintedmedia.com
-                                    </a>
-                                </div>
-                                <div className="space-y-1">
-                                    <p className="text-[10px] uppercase font-bold tracking-[0.4em] text-gray-400">Interview</p>
-                                    <a
-                                        href="mailto:join@tintedmedia.com"
-                                        className="text-lg font-light text-black hover:text-electric-blue transition-colors"
-                                    >
-                                        join@tintedmedia.com
+                                        Sadaf@tintedmedia.co
                                     </a>
                                 </div>
                                 <Link
