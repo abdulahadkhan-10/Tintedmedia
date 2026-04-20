@@ -72,12 +72,13 @@ export default function Showreel() {
                             <motion.video
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: isVideoLoaded ? 1 : 0 }}
-                                transition={{ duration: 1 }}
+                                transition={{ duration: 0.8 }}
                                 src="/showreel/tinted-reel.mp4"
                                 autoPlay
                                 loop
                                 muted
                                 playsInline
+                                preload="auto"
                                 onLoadedData={() => setIsVideoLoaded(true)}
                                 className="absolute inset-0 w-full h-full object-cover"
                             />
