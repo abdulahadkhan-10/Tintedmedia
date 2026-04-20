@@ -1,6 +1,7 @@
 import { Inter, Instrument_Serif } from 'next/font/google';
 import "./globals.css";
 import CustomCursor from "@/components/CustomCursor";
+import { Analytics } from '@vercel/analytics/next';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const instrumentSerif = Instrument_Serif({ 
@@ -24,6 +25,7 @@ export default function RootLayout({ children }) {
       <body className="antialiased font-sans">
         <CustomCursor />
         {children}
+        <Analytics/>
       </body>
     </html>
   );
