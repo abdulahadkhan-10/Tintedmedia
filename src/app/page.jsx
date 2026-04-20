@@ -9,8 +9,8 @@ import Showreel from "@/components/Showreel";
 import ContactForm from "@/components/ContactForm";
 import Footer from "@/components/Footer";
 import Preloader from "@/components/Preloader";
-import { motion } from "framer-motion";
 import SlantedVideoScroll from "@/components/Reels";
+import DriftingText from "@/components/DriftingText";
 
 export default function Home() {
   return (
@@ -36,15 +36,7 @@ export default function Home() {
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-electric-purple/5 blur-[150px] rounded-full pointer-events-none z-0" />
 
         {/* Drifting Background Text */}
-        <div className="absolute top-1/4 left-0 w-full overflow-hidden opacity-[0.02] pointer-events-none select-none z-0">
-          <motion.div
-            animate={{ x: [-1000, 0] }}
-            transition={{ repeat: Infinity, duration: 60, ease: "linear" }}
-            className="text-[6rem] font-black uppercase whitespace-nowrap text-black"
-          >
-            ORIGINALS // UNFILTERED // AUTHENTIC // BEYOND //
-          </motion.div>
-        </div>
+        <DriftingText/>
 
         <div className="relative z-10 px-6 max-w-7xl mx-auto mb-8">
           <h3 className="text-electric-blue font-mono text-[11px] tracking-[0.4em] uppercase mb-4">Originals</h3>
