@@ -73,7 +73,7 @@ export default function Showreel() {
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: isVideoLoaded ? 1 : 0 }}
                                 transition={{ duration: 1 }}
-                                src="/showreel/TINTED REEL.mp4"
+                                src="/showreel/tinted-reel.mp4"
                                 autoPlay
                                 loop
                                 muted
@@ -87,4 +87,4 @@ export default function Showreel() {
             </div>
         </section>
     );
-}
+}
