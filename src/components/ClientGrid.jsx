@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useMemo, useCallback } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
@@ -15,11 +15,6 @@ const clients = [
     { name: "Vaaree", src: "/sponsers/vaaree logo .png" },
 ];
 
-// Duplicate lists to create the seamless infinite scroll effect
-const seamlessClients = [...clients, ...clients];
-const seamlessClientsReversed = [...clients].reverse();
-const seamlessClients2 = [...seamlessClientsReversed, ...seamlessClientsReversed];
-
 const MarqueeRow = ({ items, reverse = false }) => {
     return (
         <div className="flex w-full overflow-hidden relative py-2">
@@ -29,12 +24,13 @@ const MarqueeRow = ({ items, reverse = false }) => {
                 transition={{
                     repeat: Infinity,
                     ease: "linear",
-                    duration: 35, // Adjust this value to change scroll speed
+                    duration: 35,
                 }}
+                style={{ willChange: "transform" }}
             >
                 {items.map((client, idx) => (
                     <div
-                        key={idx}
+                        key={`${client.name}-${idx}`}
                         className="relative w-40 h-28 md:w-64 md:h-36 bg-white rounded-[1.2rem] md:rounded-[1.5rem] shadow-sm border border-neutral-100 flex items-center justify-center p-6 md:p-8 shrink-0"
                     >
                         <div className="relative w-full h-full">
@@ -43,7 +39,9 @@ const MarqueeRow = ({ items, reverse = false }) => {
                                 alt={client.name}
                                 fill
                                 loading="lazy"
+                                sizes="(max-width: 768px) 160px, 256px"
                                 className="object-contain"
+                                quality={75}
                             />
                         </div>
                     </div>
@@ -54,6 +52,13 @@ const MarqueeRow = ({ items, reverse = false }) => {
 };
 
 export default function ClientGrid() {
+    // Memoize the duplicated arrays to prevent recalculation on every render
+    const seamlessClients = useMemo(() => [...clients, ...clients], []);
+    const seamlessClients2 = useMemo(() => {
+        const reversed = [...clients].reverse();
+        return [...reversed, ...reversed];
+    }, []);
+
     return (
         <section className="py-32 bg-neutral-50 overflow-hidden font-sans">
             <div className="max-w-7xl mx-auto px-6 mb-20 text-center">
@@ -61,6 +66,7 @@ export default function ClientGrid() {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
+                    transition={{ duration: 0.6 }}
                     className="text-neutral-400 font-medium tracking-widest uppercase text-sm mb-4"
                 >
                     Trusted by industry leaders
@@ -69,7 +75,7 @@ export default function ClientGrid() {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ delay: 0.1 }}
+                    transition={{ delay: 0.1, duration: 0.6 }}
                     className="text-4xl md:text-5xl font-black tracking-tighter uppercase text-neutral-900"
                 >
                     Global <span className="text-electric-blue font-light italic">Partners</span>
@@ -96,7 +102,6 @@ export default function ClientGrid() {
                     viewport={{ once: true }}
                     transition={{ delay: 0.2, duration: 0.8, ease: "easeOut" }}
                 >
-                    {/* The second row rolls in the opposite direction automatically */}
                     <MarqueeRow items={seamlessClients2} reverse={true} />
                 </motion.div>
             </div>

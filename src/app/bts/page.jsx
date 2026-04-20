@@ -3,8 +3,48 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { useRef, useState, useEffect } from "react";
 
 export default function BTSPage() {
+    const videoRefs = useRef([]);
+    const [loadedVideos, setLoadedVideos] = useState({});
+
+    const btsItems = [
+        { src: "/bts/AQMXfnLdpF2tCxuUsGECQqDzS6SpYOCynQ6Cc5nkIuJ08CKSuZqfHGgk34hrJnqY7Cd5bShZUC3zQCTIrKfKzl9TYY_wfhP3MKvpVpM.mp4", link: "https://www.instagram.com/reel/DOBjKdLkpQm/?igsh=c20yem1nbmZnZGE0" },
+        { src: "/bts/AQPa0kLUvUPVRbBWdIUmqGI7CNb-zmqg8Puh8b8cc-TC3CB6zZsEUZm6WEgvcjHsIxWzRj1XToIlhUa3Xh6nJZPF-6B6q_wCdbiY4GM.mp4", link: "https://www.instagram.com/reel/DPN8RVKiMnt/?igsh=YW02cmxuMDh1a3hh" },
+        { src: "/bts/BTS for @tanghavri - @malaikaaroraofficial 🔥.mp4", link: "https://www.instagram.com/reel/DOBizHOEhls/?igsh=NXN3MHkybmRoOTdi" },
+        { src: "/bts/The second screenplay.. the one that runs parallel to the reel ft @khushikapoor @tanghavri.mp4", link: "https://www.instagram.com/reel/DOvC2tdiDEK/?igsh=aTdvZnBqZjVlNnNl" }
+    ];
+
+    useEffect(() => {
+        const videoElements = videoRefs.current.filter(Boolean);
+        
+        const handleCanPlay = (index) => {
+            setLoadedVideos(prev => ({ ...prev, [index]: true }));
+        };
+
+        const handleError = (index) => {
+            console.error(`Video ${index} failed to load`);
+        };
+
+        videoElements.forEach((video, index) => {
+            if (video) {
+                video.addEventListener('canplay', () => handleCanPlay(index));
+                video.addEventListener('error', () => handleError(index));
+                video.load();
+            }
+        });
+
+        return () => {
+            videoElements.forEach((video) => {
+                if (video) {
+                    video.removeEventListener('canplay', () => {});
+                    video.removeEventListener('error', () => {});
+                }
+            });
+        };
+    }, []);
+
     return (
         <main className="min-h-screen bg-white text-black selection:bg-electric-blue selection:text-white font-sans">
             <Navbar />
@@ -47,11 +87,12 @@ export default function BTSPage() {
                         alt="BTS Production"
                         fill
                         className="object-cover"
+                        priority
                     />
                 </div>
             </section>
 
-
+            {/* BTS Footage Section */}
             <section className="py-24 px-6 max-w-7xl mx-auto">
                 <div className="flex flex-col items-center mb-16 text-center">
                     <span className="text-electric-blue font-mono text-[10px] uppercase tracking-[0.4em] mb-4">The Archive // REELS</span>
@@ -59,31 +100,34 @@ export default function BTSPage() {
                 </div>
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                    {[
-                        { src: "/bts/AQMXfnLdpF2tCxuUsGECQqDzS6SpYOCynQ6Cc5nkIuJ08CKSuZqfHGgk34hrJnqY7Cd5bShZUC3zQCTIrKfKzl9TYY_wfhP3MKvpVpM.mp4", link: "https://www.instagram.com/reel/DOBjKdLkpQm/?igsh=c20yem1nbmZnZGE0" },
-                        { src: "/bts/AQPa0kLUvUPVRbBWdIUmqGI7CNb-zmqg8Puh8b8cc-TC3CB6zZsEUZm6WEgvcjHsIxWzRj1XToIlhUa3Xh6nJZPF-6B6q_wCdbiY4GM.mp4", link: "https://www.instagram.com/reel/DPN8RVKiMnt/?igsh=YW02cmxuMDh1a3hh" },
-                        { src: "/bts/BTS for @tanghavri - @malaikaaroraofficial 🔥.mp4", link: "https://www.instagram.com/reel/DOBizHOEhls/?igsh=NXN3MHkybmRoOTdi" },
-                        { src: "/bts/The second screenplay.. the one that runs parallel to the reel ft @khushikapoor @tanghavri.mp4", link: "https://www.instagram.com/reel/DOvC2tdiDEK/?igsh=aTdvZnBqZjVlNnNl" }
-                    ].map((item, i) => (
+                    {btsItems.map((item, i) => (
                         <motion.div
                             key={i}
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ delay: i * 0.1 }}
-                            viewport={{ once: true }}
+                            transition={{ delay: i * 0.1, duration: 0.6 }}
+                            viewport={{ once: true, margin: "0px 0px -100px 0px" }}
                             className="relative aspect-[9/16] rounded-[2.5rem] overflow-hidden bg-gray-100 shadow-xl group cursor-pointer"
                         >
                             <a href={item.link} target="_blank" rel="noopener noreferrer" className="block w-full h-full">
-                                <video
-                                    src={item.src}
-                                    autoPlay
-                                    loop
-                                    muted
-                                    playsInline
-                                    className="w-full h-full object-cover grayscale-[0.3] group-hover:grayscale-0 transition-all duration-700"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 scale-50 group-hover:scale-100 transition-all">
+                                <div className="relative w-full h-full">
+                                    <video
+                                        ref={(el) => { videoRefs.current[i] = el; }}
+                                        src={item.src}
+                                        autoPlay
+                                        loop
+                                        muted
+                                        playsInline
+                                        preload="metadata"
+                                        crossOrigin="anonymous"
+                                        className="w-full h-full object-cover grayscale-[0.3] group-hover:grayscale-0 transition-all duration-700"
+                                    />
+                                    {!loadedVideos[i] && (
+                                        <div className="absolute inset-0 bg-gray-200 animate-pulse" />
+                                    )}
+                                </div>
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 scale-50 group-hover:scale-100 transition-all duration-300">
                                     <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/30">
                                         <div className="w-0 h-0 border-t-[6px] border-t-transparent border-l-[10px] border-l-white border-b-[6px] border-b-transparent ml-1" />
                                     </div>
