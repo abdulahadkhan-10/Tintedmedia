@@ -1,10 +1,14 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect, useCallback } from "react";
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "framer-motion";
 
 export default function Showreel() {
     const containerRef = useRef(null);
+    const videoRef = useRef(null);
     const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+    const [videoError, setVideoError] = useState(false);
+    const [retryCount, setRetryCount] = useState(0);
+    const MAX_RETRIES = 3;
 
     // Track scroll from top of section hitting top of viewport
     const { scrollYProgress } = useScroll({
@@ -18,6 +22,105 @@ export default function Showreel() {
     const rotateX = useTransform(smoothProgress, [0, 1], [37, 0]);
     const scale = useTransform(smoothProgress, [0, 1], [0.75, 1]);
     const sheenOpacity = useTransform(smoothProgress, [0, 1], [0.4, 0]);
+
+    const initializeVideo = useCallback(() => {
+        const video = videoRef.current;
+        if (!video) return;
+
+        console.log("Initializing video, attempt:", retryCount + 1);
+
+        // Reset error state
+        setVideoError(false);
+
+        // Create a controller for timing out video load
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => {
+            if (!isVideoLoaded) {
+                console.warn("Video load timeout, forcing load state");
+                setIsVideoLoaded(true);
+            }
+        }, 4000);
+
+        const handleCanPlay = () => {
+            console.log("Video canplay event fired");
+            clearTimeout(timeoutId);
+            setIsVideoLoaded(true);
+            setVideoError(false);
+            setRetryCount(0);
+        };
+
+        const handlePlay = () => {
+            console.log("Video playing");
+            if (!isVideoLoaded) {
+                setIsVideoLoaded(true);
+            }
+        };
+
+        const handleError = (e) => {
+            console.error("Video error:", e);
+            clearTimeout(timeoutId);
+            setVideoError(true);
+
+            // Retry logic
+            if (retryCount < MAX_RETRIES) {
+                console.log("Retrying video load...");
+                setRetryCount(prev => prev + 1);
+                setTimeout(() => {
+                    video.load();
+                }, 1000 * (retryCount + 1)); // Exponential backoff
+            } else {
+                // Force load after max retries
+                console.warn("Max retries reached, forcing video load");
+                setIsVideoLoaded(true);
+            }
+        };
+
+        const handleLoadedMetadata = () => {
+            console.log("Video metadata loaded, attempting to play");
+        };
+
+        // Add event listeners
+        video.addEventListener("canplay", handleCanPlay, { signal: controller.signal });
+        video.addEventListener("play", handlePlay, { signal: controller.signal });
+        video.addEventListener("error", handleError, { signal: controller.signal });
+        video.addEventListener("loadedmetadata", handleLoadedMetadata, { signal: controller.signal });
+
+        // Critical: Load the video
+        video.load();
+
+        // Attempt autoplay
+        const playPromise = video.play();
+        if (playPromise !== undefined) {
+            playPromise
+                .then(() => {
+                    console.log("Autoplay initiated");
+                })
+                .catch(error => {
+                    console.warn("Autoplay failed:", error);
+                    // Autoplay might fail on some browsers, that's okay
+                });
+        }
+
+        return () => {
+            clearTimeout(timeoutId);
+            controller.abort();
+        };
+    }, [retryCount, isVideoLoaded]);
+
+    // Initialize on mount
+    useEffect(() => {
+        initializeVideo();
+    }, []);
+
+    // Retry initialization if video fails
+    useEffect(() => {
+        if (videoError && retryCount < MAX_RETRIES) {
+            const timer = setTimeout(() => {
+                initializeVideo();
+            }, 1500);
+            return () => clearTimeout(timer);
+        }
+    }, [videoError, retryCount, initializeVideo]);
 
     return (
         <section
@@ -41,6 +144,7 @@ export default function Showreel() {
                                     <motion.div 
                                         initial={{ opacity: 1 }}
                                         exit={{ opacity: 0 }}
+                                        transition={{ duration: 0.5 }}
                                         className="absolute inset-0 z-30 bg-[#0a0a0a] flex flex-col items-center justify-center"
                                     >
                                         <div className="relative">
@@ -59,6 +163,14 @@ export default function Showreel() {
                                                 />
                                             </div>
                                         </div>
+                                        {videoError && (
+                                            <motion.p
+                                                animate={{ opacity: 0.6 }}
+                                                className="text-white/50 text-sm mt-12"
+                                            >
+                                                {retryCount < MAX_RETRIES ? `Retrying... (${retryCount}/${MAX_RETRIES})` : "Loading..."}
+                                            </motion.p>
+                                        )}
                                     </motion.div>
                                 )}
                             </AnimatePresence>
@@ -70,6 +182,7 @@ export default function Showreel() {
                             />
 
                             <motion.video
+                                ref={videoRef}
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: isVideoLoaded ? 1 : 0 }}
                                 transition={{ duration: 0.8 }}
@@ -79,7 +192,7 @@ export default function Showreel() {
                                 muted
                                 playsInline
                                 preload="auto"
-                                onLoadedData={() => setIsVideoLoaded(true)}
+                                crossOrigin="anonymous"
                                 className="absolute inset-0 w-full h-full object-cover"
                             />
                         </div>
